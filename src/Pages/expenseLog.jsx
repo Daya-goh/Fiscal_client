@@ -1,8 +1,22 @@
 import { useFormik } from "formik";
+import { useState } from "react";
+import { useEffect } from "react";
 import * as Yup from "yup";
 const SERVER = import.meta.env.VITE_SERVER;
 
 const ExpenseForm = () => {
+  const [category, setCategory] = useState([]);
+  /* ------------------- fetch data for category ------------------ */
+  useEffect(() => {
+    const urlCategory = `${SERVER}category/`;
+    fetch(urlCategory)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setCategory(data);
+      });
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       category: "",
@@ -25,8 +39,8 @@ const ExpenseForm = () => {
       console.log("submit");
       console.log(JSON.stringify(values));
       alert(JSON.stringify(values, null, 2));
-      const url = `${SERVER}expense/`;
-      fetch(url, {
+      const urlExpense = `${SERVER}expense/`;
+      fetch(urlExpense, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,11 +71,11 @@ const ExpenseForm = () => {
           >
             {" "}
             <option value="">Please choose an option</option>
-            <option value="food">Food</option>
-            <option value="transport" onChange={formik.handleChange}>
-              Transport
-            </option>
-            <option value="medical">Medical</option>
+            {category.map((cat) => (
+              <option value={cat._id} key={cat._id}>
+                {cat.category}
+              </option>
+            ))}
           </select>
           {formik.errors.category ? (
             <div className="text-sm text-red-300 italic">
