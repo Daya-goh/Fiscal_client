@@ -1,9 +1,11 @@
 import { useFormik } from "formik";
 import * as Yup from "yup"; 
+import YupPassword from "yup-password";
+YupPassword(Yup); 
 
-const url = "http://localhost:4856/login"; 
+const url = "http://localhost:4856/users"; 
 
-function LoginPage(){
+function SignUpPage(){
 
     const formik = useFormik(
         {
@@ -13,13 +15,20 @@ function LoginPage(){
             }, 
             validationSchema: Yup.object(
                 {
-                    username: Yup.string().required("*Required"), 
-                    password: Yup.string().required("*Required")
+                    username: Yup.string()
+                        .min(3, "Must be at least 3 characters")
+                        .max(15, "Must be at most 15 characters")
+                        .required("*Required"), 
+                    password: Yup.string().password()
+                        .minLowercase(1, "Password must contain at least 1 lower-case letter")
+                        .minUppercase(1, "Password must contain at least 1 upper-case letter")
+                        .minNumbers(1, "Password must contain at least 1 number")
+                        .minSymbols(1, "Password must contain at least 1 special character")
                 }
             ), 
             onSubmit: async (values) => {
                 // alert(JSON.stringify(values, null, 2)); 
-
+                
                 const res = await fetch(url, {
                     method: "POST", 
                     headers: {
@@ -28,10 +37,11 @@ function LoginPage(){
                     body: JSON.stringify(values), 
                 }); 
                 const data = await res.json(); 
-                console.log("Response for login:", data);
+                console.log("Response:", data);
             }
         }
-    )
+    ); 
+
 
     return (
         <form onSubmit={formik.handleSubmit} className="expense flex flex-col gap-8 mx-2">
@@ -49,9 +59,9 @@ function LoginPage(){
                 </label>
                 {formik.touched.password && formik.errors.password ? (<div className="text-sm text-red-300 italic">{formik.errors.password}</div>) : null}
             </div>
-            <button type="submit" className="btn btn-error w-20">Login</button>
+            <button type="submit" className="btn btn-error w-20">Sign Up</button>
         </form>
     )
-}
+} 
 
-export default LoginPage; 
+export default SignUpPage; 
