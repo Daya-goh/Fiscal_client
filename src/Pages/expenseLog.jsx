@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
+const SERVER = import.meta.env.VITE_SERVER;
 
 const ExpenseForm = () => {
   const formik = useFormik({
@@ -22,7 +23,19 @@ const ExpenseForm = () => {
     }),
     onSubmit: (values) => {
       console.log("submit");
+      console.log(JSON.stringify(values));
       alert(JSON.stringify(values, null, 2));
+      const url = `${SERVER}expense/`;
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+      //!on submit navigate to overview page
     },
   });
   return (
