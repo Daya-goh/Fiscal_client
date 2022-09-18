@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import * as Yup from "yup";
 const SERVER = import.meta.env.VITE_SERVER;
 
-const ExpenseForm = () => {
+const ExpenseForm = ({ remainder }) => {
   const [category, setCategory] = useState([]);
   /* ------------------- fetch data for category ------------------ */
   useEffect(() => {
@@ -54,6 +54,9 @@ const ExpenseForm = () => {
       //!on submit navigate to overview page
     },
   });
+
+  console.log(remainder);
+
   return (
     <div>
       <form
@@ -62,6 +65,13 @@ const ExpenseForm = () => {
       >
         <div className="flex flex-col items-center">
           <h1 className="text-xl font-bold ">Log Your Expenses</h1>
+        </div>
+
+        <div
+          className="radial-progress bg-rose-300 text-primary-content border-4 border-rose-300"
+          style={{ "--value": (remainder / 50) * 100 }}
+        >
+          {remainder}
         </div>
 
         <div className="flex flex-col">
@@ -154,7 +164,10 @@ const ExpenseForm = () => {
             className="input input-bordered w-full max-w-xs"
           />
         </div>
-        <button type="submit" className="btn btn-error w-20">
+        <button
+          type="submit"
+          className="btn bg-rose-500 border-rose-500 hover:bg-rose-300 hover:border-rose-300 w-20"
+        >
           Submit
         </button>
       </form>

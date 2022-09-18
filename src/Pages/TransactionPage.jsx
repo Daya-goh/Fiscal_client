@@ -1,22 +1,23 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { render } from "react-dom";
+import { useNavigate } from "react-router-dom";
 
 const SERVER = import.meta.env.VITE_SERVER;
 
-const TransactionPage = () => {
+const TransactionPage = ({ setRemainder }) => {
+  const [transaction, setTransaction] = useState([]);
+
   useEffect(() => {
     const month = new Date().getMonth() + 1;
-    // console.log(month);
+
     const transactionUrl = `${SERVER}transactions/${month}`;
     fetch(transactionUrl)
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data);
         setTransaction(data);
       });
   }, []);
-  const [transaction, setTransaction] = useState([]);
 
   const calendarArray = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   const currentMonth = new Date().getMonth(); //index
@@ -46,45 +47,63 @@ const TransactionPage = () => {
   //calculating the leftover
   for (const day of array) {
     for (const expense of day.logArray) {
-      day.remainder = day.budget - expense.amount;
+      day.remainder = day.remainder - expense.amount;
     }
   }
 
-  console.log("--------");
-  console.log(array);
+  //-1 due to array position
+  setRemainder(array[new Date().getDate() - 1].remainder);
+
+  const handleClick = (event) => {
+    console.log(event.target.id);
+    const navigate = useNavigate();
+    // navigate(`/expenses/${id}`);
+  };
 
   return (
     <div>
       <div>
         <h1>Transaction Page</h1>
       </div>
-      {/* <div className="card w-60 bg-base-100 shadow-xl border-2 rounded-md">
-        <div className="flex flex-row w-52 justify-evenly">
-          <div>Allowance</div>
-          <div>50</div>
-        </div>
-
-        <div className="flex flex-row w-52 justify-around">
-          <div>Food</div>
-          <div>5</div>
-        </div>
-      </div> */}
 
       {array.map((dailyOverview) => (
-        <div className="card w-80 bg-base-100 shadow-xl border-2 rounded-md">
-          <div className="flex flex-row w-52 justify-evenly">
+        <div className="card w-96 bg-base-100 shadow-xl border-2 border-yellow-300 rounded-md m-2 gap-2">
+          <div className="flex flex-row w-96 justify-center">
             <div>{dailyOverview.date}</div>
           </div>
-          <div>{dailyOverview.budget}</div>
+
+          <div className="flex justify-between px-3">
+            <div className="flex items-center ">Budget</div>
+            <div>${dailyOverview.budget}</div>
+          </div>
 
           {dailyOverview.logArray.map((expenses) => (
-            <div className="flex flex-row justify-evenly">
-              <div>{expenses.category.category}</div>
-              <div>{expenses.amount}</div>
+            <div
+              className="flex flex-row justify-between px-3 hover:bg-yellow-200"
+              id={expenses._id}
+              onClick={() => handleClick(event)}
+            >
+              <div className="flex items-center w-32" id={expenses._id}>
+                {expenses.category.category}
+              </div>
+              <div
+                className="flex items-center justify-center text-xs w-32"
+                id={expenses._id}
+              >
+                {expenses.name}
+              </div>
+              <div
+                className="flex items-center justify-end w-32"
+                id={expenses._id}
+              >
+                -${expenses.amount}
+              </div>
             </div>
           ))}
 
-          <div>{dailyOverview.remainder}</div>
+          <div className="flex justify-end border-t-2 p-3">
+            ${dailyOverview.remainder}
+          </div>
         </div>
       ))}
     </div>
