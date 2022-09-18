@@ -12,13 +12,15 @@ const ExpenseForm = () => {
     fetch(urlCategory)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setCategory(data);
       });
   }, []);
 
   const formik = useFormik({
     initialValues: {
+      //! fill user_id and budget_id info after validation
+      user_id: "",
+      budget_id: "",
       category: "",
       date: new Date().toLocaleDateString("en-CA"),
       amount: "",
