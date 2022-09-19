@@ -176,3 +176,8 @@ const ExpenseForm = ({ remainder }) => {
 };
 
 export default ExpenseForm;
+
+// import { useState } from "react";
+// import ExpenseForm from "./Pages/ExpenseForm";
+// const [remainder, setRemainder] = useState("");
+// <ExpenseForm remainder={remainder} />

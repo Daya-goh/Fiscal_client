@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { render } from "react-dom";
 import { useNavigate } from "react-router-dom";
 
 const SERVER = import.meta.env.VITE_SERVER;
@@ -111,3 +110,6 @@ const TransactionPage = ({ setRemainder }) => {
 };
 
 export default TransactionPage;
+
+// import TransactionPage from "./Pages/TransactionPage";
+// <TransactionPage setRemainder={setRemainder} />
