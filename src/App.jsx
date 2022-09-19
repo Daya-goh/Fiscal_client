@@ -19,7 +19,6 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Fi$cal</h1>
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
