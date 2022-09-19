@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 import React from "react";
 import BudgetPage from "./Pages/BudgetPage";
-=======
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Layout from "./Layout";
@@ -12,7 +10,6 @@ import TransactionPage from "./Pages/TransactionPage";
 import Overview from "./Pages/Overview";
 
 import { useEffect, useState } from "react";
->>>>>>> 28cdb0efd82e2a38ca99aa662445b1634c1c4119
 
 function App() {
   const [remainder, setRemainder] = useState("");
@@ -22,9 +19,6 @@ function App() {
 
   return (
     <div className="App">
-<<<<<<< HEAD
-      <BudgetPage />
-=======
       <h1>Fi$cal</h1>
       <BrowserRouter>
         <Routes>
@@ -43,7 +37,6 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
->>>>>>> 28cdb0efd82e2a38ca99aa662445b1634c1c4119
     </div>
   );
 }
