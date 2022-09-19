@@ -1,10 +1,49 @@
+<<<<<<< HEAD
 import React from "react";
 import BudgetPage from "./Pages/BudgetPage";
+=======
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Layout from "./Layout";
+import ExpenseForm from "./Pages/ExpenseForm";
+import LoginPage from "./Pages/LoginPage";
+import SignUpPage from "./Pages/SignUpPage";
+import TransactionPage from "./Pages/TransactionPage";
+import Overview from "./Pages/Overview";
+
+import { useEffect, useState } from "react";
+>>>>>>> 28cdb0efd82e2a38ca99aa662445b1634c1c4119
 
 function App() {
+  const [remainder, setRemainder] = useState("");
+  useEffect(() => {
+    console.log(remainder);
+  }, [remainder]);
+
   return (
     <div className="App">
+<<<<<<< HEAD
       <BudgetPage />
+=======
+      <h1>Fi$cal</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/personal" element={<Layout />}>
+            <Route index element={<Overview />} />
+            <Route
+              path="/personal/expenselog"
+              element={<ExpenseForm remainder={remainder} />}
+            />
+            <Route
+              path="/personal/transactions"
+              element={<TransactionPage setRemainder={setRemainder} />}
+            />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+>>>>>>> 28cdb0efd82e2a38ca99aa662445b1634c1c4119
     </div>
   );
 }

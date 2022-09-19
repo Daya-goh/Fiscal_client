@@ -2,6 +2,7 @@ import React from "react";
 import IncomeForm from "../Components/IncomeForm";
 import FixedExpenditureForm from "../Components/FixedExpenditureForm";
 import SavingsForm from "../Components/SavingsForm";
+import AllowanceBudgetPage from "../Components/AllowanceBudgetPage";
 
 function BudgetPage() {
   return (
@@ -13,6 +14,7 @@ function BudgetPage() {
             <IncomeForm />
             <FixedExpenditureForm />
             <SavingsForm />
+            <AllowanceBudgetPage />
           </div>
         </div>
       </div>
