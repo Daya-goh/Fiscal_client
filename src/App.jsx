@@ -1,5 +1,4 @@
 import React from "react";
-import BudgetPage from "./Pages/BudgetPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Layout from "./Layout";
@@ -8,6 +7,7 @@ import LoginPage from "./Pages/LoginPage";
 import SignUpPage from "./Pages/SignUpPage";
 import TransactionPage from "./Pages/TransactionPage";
 import Overview from "./Pages/Overview";
+import BudgetPage from "./Pages/BudgetPage";
 
 import { useEffect, useState } from "react";
 
@@ -34,6 +34,7 @@ function App() {
               path="/personal/transactions"
               element={<TransactionPage setRemainder={setRemainder} />}
             />
+            <Route path="/personal/budget" element={<BudgetPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
