@@ -24,7 +24,7 @@ const SavingsForm = () => (
         <Form>
           <FieldArray name="savings">
             {({ insert, remove, push }) => (
-              <div>
+              <div className="flex-auto">
                 {values.savings.length > 0 &&
                   values.savings.map((savings, index) => (
                     <div className="row" key={index}>
@@ -59,7 +59,7 @@ const SavingsForm = () => (
                       <div className="col">
                         <button
                           type="button"
-                          className="secondary"
+                          className="secondary text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 my-2"
                           onClick={() => remove(index)}
                         >
                           Remove
@@ -69,7 +69,7 @@ const SavingsForm = () => (
                   ))}
                 <button
                   type="button"
-                  className="secondary"
+                  className="secondary text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 my-2"
                   onClick={() => push({ title: "", amount: "" })}
                 >
                   Add New savings
@@ -77,7 +77,12 @@ const SavingsForm = () => (
               </div>
             )}
           </FieldArray>
-          <button type="submit">Submit</button>
+          <button
+            type="submit"
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 my-2"
+          >
+            Submit
+          </button>
         </Form>
       )}
     </Formik>
