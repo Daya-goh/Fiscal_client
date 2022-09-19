@@ -29,10 +29,16 @@ const SavingsForm = () => (
                   values.savings.map((savings, index) => (
                     <div className="row" key={index}>
                       <div className="col">
-                        <label htmlFor={`savings.${index}.title`}>Title</label>
+                        <label
+                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 mt-2"
+                          htmlFor={`savings.${index}.title`}
+                        >
+                          Title
+                        </label>
                         <Field
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           name={`savings.${index}.title`}
-                          placeholder="e.g. Salary"
+                          placeholder="e.g. Fixed Deposit"
                           type="text"
                         />
                         <ErrorMessage
@@ -42,10 +48,14 @@ const SavingsForm = () => (
                         />
                       </div>
                       <div className="col">
-                        <label htmlFor={`savings.${index}.amount`}>
+                        <label
+                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 mt-2"
+                          htmlFor={`savings.${index}.amount`}
+                        >
                           Amount
                         </label>
                         <Field
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-2"
                           name={`savings.${index}.amount`}
                           placeholder="1000"
                           type="number"
