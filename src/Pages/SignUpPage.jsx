@@ -65,3 +65,6 @@ function SignUpPage(){
 } 
 
 export default SignUpPage; 
+
+// import SignUpPage from "./Pages/SignUpPage";
+// <SignUpPage />
