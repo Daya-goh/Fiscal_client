@@ -31,7 +31,7 @@ function AllowanceBudgetPage() {
 
           <div className="stat">
             <div className="stat-title">Total Allowance</div>
-            <div className="stat-value">1,200</div>
+            <div className="stat-value">5,800</div>
             <div className="stat-desc">↘︎ 90 (14%)</div>
           </div>
         </div>

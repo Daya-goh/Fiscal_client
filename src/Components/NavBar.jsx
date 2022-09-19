@@ -6,6 +6,8 @@ function NavBar() {
       <Link to="/personal">Overview </Link>
       <Link to="/personal/expenselog">Log your Expense </Link>
       <Link to="/personal/transactions">Transaction History </Link>
+      <Link to="/personal/budget">Budget</Link>
+      <Link to="/personal/settings">Settings</Link>
     </>
   );
 }

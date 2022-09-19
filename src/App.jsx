@@ -8,7 +8,7 @@ import SignUpPage from "./Pages/SignUpPage";
 import TransactionPage from "./Pages/TransactionPage";
 import Overview from "./Pages/Overview";
 import BudgetPage from "./Pages/BudgetPage";
-
+import SettingsPage from "./Pages/SettingsPage";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -35,6 +35,7 @@ function App() {
               element={<TransactionPage setRemainder={setRemainder} />}
             />
             <Route path="/personal/budget" element={<BudgetPage />} />
+            <Route path="/personal/settings" element={<SettingsPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
