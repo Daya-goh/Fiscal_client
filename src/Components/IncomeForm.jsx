@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
+import * as yup from "yup";
 
 const initialValues = {
   income: [
@@ -10,8 +11,13 @@ const initialValues = {
   ],
 };
 
+let validationSchema = yup.object().shape({
+  title: yup.string().required("title is required"),
+  amount: yup.string().required("Amount is required"),
+});
+
 const IncomeForm = () => (
-  <div>
+  <div className="p-4 w-full max-w-sm bg-white rounded-lg border border-gray-200 shadow-xl sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
     <h1 className="font-bold">INCOME</h1>
     <Formik
       initialValues={initialValues}
@@ -60,6 +66,7 @@ const IncomeForm = () => (
                           placeholder="1000"
                           type="number"
                         />
+
                         <ErrorMessage
                           name={`income.${index}.title`}
                           component="div"

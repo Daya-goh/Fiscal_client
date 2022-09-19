@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
+import * as yup from "yup";
 
 const initialValues = {
   savings: [
@@ -10,8 +11,13 @@ const initialValues = {
   ],
 };
 
+let validationSchema = yup.object().shape({
+  title: yup.string().required("title is required"),
+  amount: yup.string().required("Amount is required"),
+});
+
 const SavingsForm = () => (
-  <div>
+  <div className="p-4 w-full max-w-sm bg-white rounded-lg border border-gray-200 shadow-xl sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
     <h1 className="font-bold">SAVINGS</h1>
     <Formik
       initialValues={initialValues}
@@ -24,7 +30,7 @@ const SavingsForm = () => (
         <Form>
           <FieldArray name="savings">
             {({ insert, remove, push }) => (
-              <div className="flex-auto">
+              <div>
                 {values.savings.length > 0 &&
                   values.savings.map((savings, index) => (
                     <div className="row" key={index}>
