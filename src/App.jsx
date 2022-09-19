@@ -5,20 +5,11 @@ import ExpenseForm from "./Pages/ExpenseForm";
 import LoginPage from "./Pages/LoginPage";
 import SignUpPage from "./Pages/SignUpPage";
 import TransactionPage from "./Pages/TransactionPage";
+import Overview from "./Pages/Overview";
 
 import { useEffect, useState } from "react";
 
 function App() {
-  // useEffect(() => {
-  //   const month = new Date().getMonth() + 1;
-
-  //   const transactionUrl = `${SERVER}transactions/${month}`;
-  //   fetch(transactionUrl)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //     });
-  // }, []);
-
   const [remainder, setRemainder] = useState("");
   useEffect(() => {
     console.log(remainder);
@@ -32,7 +23,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/personal" element={<Layout />}>
-            {/* <Route path="/overview" element={<Overview />} /> */}
+            <Route index element={<Overview />} />
             <Route
               path="/personal/expenselog"
               element={<ExpenseForm remainder={remainder} />}

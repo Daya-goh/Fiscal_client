@@ -67,13 +67,6 @@ const ExpenseForm = ({ remainder }) => {
           <h1 className="text-xl font-bold ">Log Your Expenses</h1>
         </div>
 
-        <div
-          className="radial-progress bg-rose-300 text-primary-content border-4 border-rose-300"
-          style={{ "--value": (remainder / 50) * 100 }}
-        >
-          {remainder}
-        </div>
-
         <div className="flex flex-col">
           <label>Category</label>
           <select
