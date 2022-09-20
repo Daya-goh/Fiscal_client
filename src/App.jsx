@@ -15,8 +15,6 @@ import { useEffect, useState } from "react";
 import UpdateExpense from "./Components/UpdateExpense";
 
 function App() {
-  // const [remainder, setRemainder] = useState("");
-  // const [transaction, setTransaction] = useState([]);
   const [targetExpense, setTargetExpense] = useState("");
   return (
     <div className="App">
