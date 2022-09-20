@@ -1,8 +1,10 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import IncomeForm from "../Components/IncomeForm";
 import FixedExpenditureForm from "../Components/FixedExpenditureForm";
 import SavingsForm from "../Components/SavingsForm";
 import AllowanceBudgetPage from "../Components/AllowanceBudgetPage";
+import UserBudgetLog from "../Components/UserBudgetLog";
+const SERVER = import.meta.env.VITE_SERVER;
 
 function BudgetPage() {
   return (
@@ -16,6 +18,7 @@ function BudgetPage() {
             <SavingsForm />
             <AllowanceBudgetPage />
           </div>
+          <UserBudgetLog />
         </div>
       </div>
     </>
