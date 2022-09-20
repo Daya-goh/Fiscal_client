@@ -18,12 +18,15 @@ import ExpensesYear from "./Components/analysis/expenses/ExpensesYear";
 import BalanceMonth from "./Components/analysis/balance/BalanceMonth";
 import BalanceYear from "./Components/analysis/balance/BalanceYear";
 import SavingsYear from "./Components/analysis/savings/SavingsYear";
+import RebudgetPage from "./Pages/RebudgetPage";
+import BudgetHistoryPage from "./Pages/BudgetHistoryPage";
 export const PersonContext = createContext();
 
 function App() {
   const [targetExpense, setTargetExpense] = useState({});
   const [userName, setUsername] = useState("");
   const [token, setToken] = useState("");
+  const [newBudget, setNewBudget] = useState(false); 
 
   return (
     <div className="App">
@@ -60,7 +63,9 @@ function App() {
                 }
               />
 
-              <Route path="/personal/budget" element={<BudgetPage />} />
+              {/* <Route path="/personal/budget" element={<BudgetPage />} /> */}
+              <Route path="/personal/budget" element={<RebudgetPage setNewBudget={setNewBudget} />} />
+              <Route path="/personal/budget/history" element={<BudgetHistoryPage token={token} newBudget={newBudget} setNewBudget={setNewBudget} />} />
               <Route path="/personal/settings" element={<SettingsPage />} />
               <Route path="/personal/analysis" element={<AnalysisPage />}>
                 <Route index element={<ExpensesMonth />} />
