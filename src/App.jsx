@@ -7,14 +7,11 @@ import SignUpPage from "./Pages/SignUpPage";
 import TransactionPage from "./Pages/TransactionPage";
 import Overview from "./Pages/Overview";
 
-import { useEffect, useState } from "react";
-// import UpdateExpense from "./Components/UpdateExpense";
-// import UpdateExpensePage from "./Pages/UpdateExpensePage";
+import { useState } from "react";
+
 import UpdateExpense from "./Components/UpdateExpense";
 
 function App() {
-  // const [remainder, setRemainder] = useState("");
-  // const [transaction, setTransaction] = useState([]);
   const [targetExpense, setTargetExpense] = useState("");
   return (
     <div className="App">
