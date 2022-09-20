@@ -1,14 +1,19 @@
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { PersonContext } from "../App";
+
 const SERVER = import.meta.env.VITE_SERVER;
 
-const ExpenseForm = () => {
+const ExpenseForm = ({ token }) => {
   const [category, setCategory] = useState([]);
   const [budgetData, setBudgetData] = useState([]);
   const navigate = useNavigate();
+  const userID = useContext(PersonContext);
+  console.log(userID);
+
   /* ------------------- fetch data for category ------------------ */
   useEffect(() => {
     const urlCategory = `${SERVER}category/`;
@@ -27,7 +32,6 @@ const ExpenseForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      user_id: "",
       category: "",
       date: new Date().toLocaleDateString("en-CA"),
       amount: "",
@@ -46,15 +50,24 @@ const ExpenseForm = () => {
     }),
     onSubmit: (values) => {
       alert(
-        JSON.stringify({ budget_id: budgetData[0]?._id, ...values }, null, 2)
+        JSON.stringify(
+          { user_id: userID, budget_id: budgetData[0]?._id, ...values },
+          null,
+          2
+        )
       );
       const urlExpense = `${SERVER}expense/`;
       fetch(urlExpense, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          user_id: userID,
+          budget_id: budgetData[0]?._id,
+          ...values,
+        }),
       })
         .then((response) => response.json())
         .then((data) => console.log(data));

@@ -23,8 +23,8 @@ const UpdateExpense = ({ targetExpense }) => {
     enableReinitialize: true,
     initialValues: {
       //! fill user_id and budget_id info after validation
-      user_id: "",
-      budget_id: "",
+      user_id: targetExpense.user_id,
+      budget_id: targetExpense.budget_id,
       category: targetExpense?.category,
       date: targetExpense?.date?.split("T")[0],
       amount: targetExpense?.amount,

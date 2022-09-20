@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Layout from "./Layout";
@@ -18,39 +18,74 @@ import ExpensesYear from "./Components/analysis/expenses/ExpensesYear";
 import BalanceMonth from "./Components/analysis/balance/BalanceMonth";
 import BalanceYear from "./Components/analysis/balance/BalanceYear";
 import SavingsYear from "./Components/analysis/savings/SavingsYear";
+export const PersonContext = createContext();
 
 function App() {
-  const [targetExpense, setTargetExpense] = useState("");
+  const [targetExpense, setTargetExpense] = useState({});
+  const [userName, setUsername] = useState("");
+  const [token, setToken] = useState("");
+
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/personal" element={<Layout />}>
-            <Route index element={<Overview />} />
-            <Route path="/personal/expenselog" element={<ExpenseForm />} />
+      <PersonContext.Provider value={userName}>
+        <BrowserRouter>
+          <Routes>
             <Route
-              path="/personal/expenselog/:id"
-              element={<UpdateExpense targetExpense={targetExpense} />}
+              path="/login"
+              element={
+                <LoginPage setUsername={setUsername} setToken={setToken} />
+              }
             />
-            <Route
-              path="/personal/transactions"
-              element={<TransactionPage setTargetExpense={setTargetExpense} />}
-            />
-            <Route path="/personal/budget" element={<BudgetPage />} />
-            <Route path="/personal/settings" element={<SettingsPage />} />
-            <Route path="/personal/analysis" element={<AnalysisPage />}>
-              <Route index element={<ExpensesMonth />} />
-              <Route path="/personal/analysis/expenses/month" element={<ExpensesMonth />} />
-              <Route path="/personal/analysis/expenses/year" element={<ExpensesYear />} />
-              <Route path="/personal/analysis/savings/year" element={<SavingsYear />} />
-              <Route path="/personal/analysis/balance/month" element={<BalanceMonth />} />
-              <Route path="/personal/analysis/balance/year" element={<BalanceYear />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/personal" element={<Layout />}>
+              <Route index element={<Overview token={token} />} />
+
+              <Route
+                path="/personal/expenselog"
+                element={<ExpenseForm token={token} />}
+              />
+              <Route
+                path="/personal/expenselog/:id"
+                element={
+                  <UpdateExpense targetExpense={targetExpense} token={token} />
+                }
+              />
+              <Route
+                path="/personal/transactions"
+                element={
+                  <TransactionPage setTargetExpense={setTargetExpense} />
+                }
+              />
+
+              <Route path="/personal/budget" element={<BudgetPage />} />
+              <Route path="/personal/settings" element={<SettingsPage />} />
+              <Route path="/personal/analysis" element={<AnalysisPage />}>
+                <Route index element={<ExpensesMonth />} />
+                <Route
+                  path="/personal/analysis/expenses/month"
+                  element={<ExpensesMonth />}
+                />
+                <Route
+                  path="/personal/analysis/expenses/year"
+                  element={<ExpensesYear />}
+                />
+                <Route
+                  path="/personal/analysis/savings/year"
+                  element={<SavingsYear />}
+                />
+                <Route
+                  path="/personal/analysis/balance/month"
+                  element={<BalanceMonth />}
+                />
+                <Route
+                  path="/personal/analysis/balance/year"
+                  element={<BalanceYear />}
+                />
+              </Route>
             </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </PersonContext.Provider>
     </div>
   );
 }
