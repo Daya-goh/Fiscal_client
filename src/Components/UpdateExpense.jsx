@@ -1,11 +1,14 @@
+import { format } from "date-fns";
 import { useFormik } from "formik";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 const SERVER = import.meta.env.VITE_SERVER;
 
-const ExpenseForm = () => {
+const UpdateExpense = ({ targetExpense }) => {
+  console.log(targetExpense);
   const [category, setCategory] = useState([]);
+  const navigate = useNavigate();
   /* ------------------- fetch data for category ------------------ */
   useEffect(() => {
     const urlCategory = `${SERVER}category/`;
@@ -17,15 +20,16 @@ const ExpenseForm = () => {
   }, []);
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       //! fill user_id and budget_id info after validation
       user_id: "",
       budget_id: "",
-      category: "",
-      date: new Date().toLocaleDateString("en-CA"),
-      amount: "",
-      name: "",
-      description: "",
+      category: targetExpense?.category,
+      date: targetExpense?.date?.split("T")[0],
+      amount: targetExpense?.amount,
+      name: targetExpense?.name,
+      description: targetExpense?.description,
     },
     validationSchema: Yup.object({
       category: Yup.string().required("Required"),
@@ -41,9 +45,9 @@ const ExpenseForm = () => {
       console.log("submit");
       console.log(JSON.stringify(values));
       alert(JSON.stringify(values, null, 2));
-      const urlExpense = `${SERVER}expense/`;
+      const urlExpense = `${SERVER}expense/${targetExpense._id}`;
       fetch(urlExpense, {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -52,11 +56,13 @@ const ExpenseForm = () => {
         .then((response) => response.json())
         .then((data) => console.log(data));
       //!on submit navigate to overview page
+      navigate("/personal/transactions");
     },
   });
 
   return (
     <div>
+      <h1>hi</h1>
       <form
         onSubmit={formik.handleSubmit}
         className="expense flex flex-col gap-8 mx-2 "
@@ -71,6 +77,7 @@ const ExpenseForm = () => {
             name="category"
             onChange={formik.handleChange}
             className="input input-bordered w-full max-w-xs"
+            value={formik.values.category}
           >
             {" "}
             <option value="">Please choose an option</option>
@@ -132,7 +139,7 @@ const ExpenseForm = () => {
             type="text"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.name.toLocaleLowerCase()}
+            value={formik.values.name}
             className="input input-bordered w-full max-w-xs"
           />
           {formik.errors.name ? (
@@ -166,9 +173,4 @@ const ExpenseForm = () => {
   );
 };
 
-export default ExpenseForm;
-
-// import { useState } from "react";
-// import ExpenseForm from "./Pages/ExpenseForm";
-// const [remainder, setRemainder] = useState("");
-// <ExpenseForm remainder={remainder} />
+export default UpdateExpense;

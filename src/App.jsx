@@ -8,13 +8,14 @@ import TransactionPage from "./Pages/TransactionPage";
 import Overview from "./Pages/Overview";
 
 import { useEffect, useState } from "react";
+// import UpdateExpense from "./Components/UpdateExpense";
+// import UpdateExpensePage from "./Pages/UpdateExpensePage";
+import UpdateExpense from "./Components/UpdateExpense";
 
 function App() {
-  const [remainder, setRemainder] = useState("");
-  useEffect(() => {
-    console.log(remainder);
-  }, [remainder]);
-
+  // const [remainder, setRemainder] = useState("");
+  // const [transaction, setTransaction] = useState([]);
+  const [targetExpense, setTargetExpense] = useState("");
   return (
     <div className="App">
       <h1>Fi$cal</h1>
@@ -24,13 +25,14 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/personal" element={<Layout />}>
             <Route index element={<Overview />} />
+            <Route path="/personal/expenselog" element={<ExpenseForm />} />
             <Route
-              path="/personal/expenselog"
-              element={<ExpenseForm remainder={remainder} />}
+              path="/personal/expenselog/:id"
+              element={<UpdateExpense targetExpense={targetExpense} />}
             />
             <Route
               path="/personal/transactions"
-              element={<TransactionPage setRemainder={setRemainder} />}
+              element={<TransactionPage setTargetExpense={setTargetExpense} />}
             />
           </Route>
         </Routes>
