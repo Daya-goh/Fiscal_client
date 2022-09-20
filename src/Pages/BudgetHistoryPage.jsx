@@ -10,6 +10,8 @@ function BudgetHistoryPage({ token, newBudget, setNewBudget }){
     const [budgetData, setBudgetData] = useState([]); 
     const navigate = useNavigate(); 
 
+    console.log("newBudget from PROPS:", newBudget);
+
     useEffect(() => {
         fetch(budgetHistoryURL, {
             headers: {
@@ -22,27 +24,30 @@ function BudgetHistoryPage({ token, newBudget, setNewBudget }){
     }, [newBudget]); 
     console.log("Budget data retrieved from server:", budgetData);
 
-    if (newBudget === true){
-        const toUpdate = budgetData.slice(0, budgetData.length-1); 
-        const updated = []; 
-        toUpdate.map(budgetEntry => {
-            budgetEntry.active = false; 
-            fetch(`${SERVER}rebudget/${budgetEntry._id}`, {
-                method: "PUT", 
-                headers: {
-                    "Content-Type": "application/json", 
-                    "Authorization": `Bearer ${token}`
-                }, 
-                body: JSON.stringify(budgetEntry)
-            })
-            .then(response => response.json())
-            .then(data => updated.push(data))
-        }); 
-        console.log("Updated the active state for older budget entries:", updated);
-
-        updated.push(budgetData[budgetData.length-1]); 
-        setBudgetData(updated); 
-        setNewBudget(false); 
+    const setOldBudgetToInactive = () => {
+        if (newBudget === true){
+            const toUpdate = budgetData.slice(0, budgetData.length-1); 
+            const updated = []; 
+            toUpdate.map(budgetEntry => {
+                budgetEntry.active = false; 
+                fetch(`${SERVER}rebudget/${budgetEntry._id}`, {
+                    method: "PUT", 
+                    headers: {
+                        "Content-Type": "application/json", 
+                        "Authorization": `Bearer ${token}`
+                    }, 
+                    body: JSON.stringify(budgetEntry)
+                })
+                .then(response => response.json())
+                .then(data => updated.push(data))
+            }); 
+            // console.log("Updated the active state for older budget entries:", updated);
+            console.log("toUpdate:", toUpdate);
+    
+            // updated.push(budgetData[budgetData.length-1]); 
+            setBudgetData(updated); 
+            setNewBudget(false); 
+        }
     }
 
 
