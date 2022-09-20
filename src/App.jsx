@@ -10,8 +10,7 @@ import Overview from "./Pages/Overview";
 import BudgetPage from "./Pages/BudgetPage";
 import SettingsPage from "./Pages/SettingsPage";
 import { useEffect, useState } from "react";
-// import UpdateExpense from "./Components/UpdateExpense";
-// import UpdateExpensePage from "./Pages/UpdateExpensePage";
+
 import UpdateExpense from "./Components/UpdateExpense";
 import AnalysisPage from "./Pages/AnalysisPage";
 import ExpensesMonth from "./Components/analysis/expenses/ExpensesMonth";

@@ -1,11 +1,14 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 const SERVER = import.meta.env.VITE_SERVER;
 
 const ExpenseForm = () => {
   const [category, setCategory] = useState([]);
+  const [budgetData, setBudgetData] = useState([]);
+  const navigate = useNavigate();
   /* ------------------- fetch data for category ------------------ */
   useEffect(() => {
     const urlCategory = `${SERVER}category/`;
@@ -14,13 +17,17 @@ const ExpenseForm = () => {
       .then((data) => {
         setCategory(data);
       });
+    const urlActiveBudget = `${SERVER}budget/active/`;
+    fetch(urlActiveBudget)
+      .then((response) => response.json())
+      .then((data) => {
+        setBudgetData(data);
+      });
   }, []);
 
   const formik = useFormik({
     initialValues: {
-      //! fill user_id and budget_id info after validation
       user_id: "",
-      budget_id: "",
       category: "",
       date: new Date().toLocaleDateString("en-CA"),
       amount: "",
@@ -38,9 +45,9 @@ const ExpenseForm = () => {
       name: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      console.log("submit");
-      console.log(JSON.stringify(values));
-      alert(JSON.stringify(values, null, 2));
+      alert(
+        JSON.stringify({ budget_id: budgetData[0]?._id, ...values }, null, 2)
+      );
       const urlExpense = `${SERVER}expense/`;
       fetch(urlExpense, {
         method: "POST",
@@ -51,7 +58,9 @@ const ExpenseForm = () => {
       })
         .then((response) => response.json())
         .then((data) => console.log(data));
-      //!on submit navigate to overview page
+
+      //on submit navigate to overview page
+      navigate("/personal/transactions");
     },
   });
 
