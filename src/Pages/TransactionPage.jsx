@@ -1,27 +1,34 @@
 import { getDate, getDaysInMonth, getMonth, getYear } from "date-fns";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
 import sub from "date-fns/sub";
 import { add } from "date-fns";
 import DayTransaction from "../Components/DayTransaction";
+import { PersonContext } from "../App";
 
 const SERVER = import.meta.env.VITE_SERVER;
 
-const TransactionPage = ({ setTargetExpense }) => {
+const TransactionPage = ({ setTargetExpense, token }) => {
   const [transaction, setTransaction] = useState([]);
   const [date, setDate] = useState(new Date());
+  const userID = useContext(PersonContext);
 
   useEffect(() => {
     const month = getMonth(date) + 1;
 
     const transactionUrl = `${SERVER}transactions/${month}`;
-    fetch(transactionUrl)
+    fetch(transactionUrl, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         const x = renderArray(data, date);
         setTransaction(x);
       });
-  }, [date]);
+  }, [date, userID]);
 
   const renderArray = (data, date) => {
     const currentMonth = getMonth(date); //index
@@ -90,6 +97,7 @@ const TransactionPage = ({ setTargetExpense }) => {
             dailyOverview={dailyOverview}
             key={index}
             setTargetExpense={setTargetExpense}
+            token={token}
           />
         ))}
       </div>

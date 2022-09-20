@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 const SERVER = import.meta.env.VITE_SERVER;
 
-const UpdateExpense = ({ targetExpense }) => {
+const UpdateExpense = ({ targetExpense, token }) => {
   console.log(targetExpense);
   const [category, setCategory] = useState([]);
   const navigate = useNavigate();
@@ -23,8 +23,8 @@ const UpdateExpense = ({ targetExpense }) => {
     enableReinitialize: true,
     initialValues: {
       //! fill user_id and budget_id info after validation
-      user_id: "",
-      budget_id: "",
+      user_id: targetExpense.user_id,
+      budget_id: targetExpense.budget_id,
       category: targetExpense?.category,
       date: targetExpense?.date?.split("T")[0],
       amount: targetExpense?.amount,
@@ -50,6 +50,7 @@ const UpdateExpense = ({ targetExpense }) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(values),
       })
