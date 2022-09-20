@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const SERVER = import.meta.env.VITE_SERVER;
 
-const DayTransaction = ({ dailyOverview, index, setTargetExpense }) => {
+const DayTransaction = ({ dailyOverview, index, setTargetExpense, token }) => {
   const navigate = useNavigate();
   const handleClick = (event) => {
     const id = event.target.id;
     const url = `${SERVER}expense/${id}/`;
-    fetch(url)
+    fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         // console.log(data);

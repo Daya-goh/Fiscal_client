@@ -2,18 +2,22 @@
 import { useEffect, useState } from "react";
 const SERVER = import.meta.env.VITE_SERVER;
 
-const Overview = () => {
+const Overview = ({ token }) => {
   const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
     const urlToday = `${SERVER}transactions/today/`;
-    fetch(urlToday)
+    fetch(urlToday, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
         setExpenses(data);
       });
-  }, []);
+  }, [token]);
 
   //! i have to fetch the budget
   const budget = 50;

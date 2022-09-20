@@ -1,4 +1,5 @@
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup"; 
 import YupPassword from "yup-password";
 YupPassword(Yup); 
@@ -6,6 +7,8 @@ YupPassword(Yup);
 const url = "http://localhost:4856/users"; 
 
 function SignUpPage(){
+
+    const navigate = useNavigate(); 
 
     const formik = useFormik(
         {
@@ -38,6 +41,7 @@ function SignUpPage(){
                 }); 
                 const data = await res.json(); 
                 console.log("Response:", data);
+                navigate("/login"); 
             }
         }
     ); 
