@@ -13,6 +13,12 @@ import { useEffect, useState } from "react";
 // import UpdateExpense from "./Components/UpdateExpense";
 // import UpdateExpensePage from "./Pages/UpdateExpensePage";
 import UpdateExpense from "./Components/UpdateExpense";
+import AnalysisPage from "./Pages/AnalysisPage";
+import ExpensesMonth from "./Components/analysis/expenses/ExpensesMonth";
+import ExpensesYear from "./Components/analysis/expenses/ExpensesYear";
+import BalanceMonth from "./Components/analysis/balance/BalanceMonth";
+import BalanceYear from "./Components/analysis/balance/BalanceYear";
+import SavingsYear from "./Components/analysis/savings/SavingsYear";
 
 function App() {
   const [targetExpense, setTargetExpense] = useState("");
@@ -35,6 +41,14 @@ function App() {
             />
             <Route path="/personal/budget" element={<BudgetPage />} />
             <Route path="/personal/settings" element={<SettingsPage />} />
+            <Route path="/personal/analysis" element={<AnalysisPage />}>
+              <Route index element={<ExpensesMonth />} />
+              <Route path="/personal/analysis/expenses/month" element={<ExpensesMonth />} />
+              <Route path="/personal/analysis/expenses/year" element={<ExpensesYear />} />
+              <Route path="/personal/analysis/savings/year" element={<SavingsYear />} />
+              <Route path="/personal/analysis/balance/month" element={<BalanceMonth />} />
+              <Route path="/personal/analysis/balance/year" element={<BalanceYear />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
