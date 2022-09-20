@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Layout from "./Layout";
@@ -6,7 +7,8 @@ import LoginPage from "./Pages/LoginPage";
 import SignUpPage from "./Pages/SignUpPage";
 import TransactionPage from "./Pages/TransactionPage";
 import Overview from "./Pages/Overview";
-
+import BudgetPage from "./Pages/BudgetPage";
+import SettingsPage from "./Pages/SettingsPage";
 import { useEffect, useState } from "react";
 // import UpdateExpense from "./Components/UpdateExpense";
 // import UpdateExpensePage from "./Pages/UpdateExpensePage";
@@ -18,7 +20,6 @@ function App() {
   const [targetExpense, setTargetExpense] = useState("");
   return (
     <div className="App">
-      <h1>Fi$cal</h1>
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
@@ -34,6 +35,8 @@ function App() {
               path="/personal/transactions"
               element={<TransactionPage setTargetExpense={setTargetExpense} />}
             />
+            <Route path="/personal/budget" element={<BudgetPage />} />
+            <Route path="/personal/settings" element={<SettingsPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
