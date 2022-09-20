@@ -8,7 +8,7 @@ import { PersonContext } from "../App";
 
 const SERVER = import.meta.env.VITE_SERVER;
 
-const TransactionPage = ({ setTargetExpense }) => {
+const TransactionPage = ({ setTargetExpense, token }) => {
   const [transaction, setTransaction] = useState([]);
   const [date, setDate] = useState(new Date());
   const userID = useContext(PersonContext);
@@ -20,7 +20,7 @@ const TransactionPage = ({ setTargetExpense }) => {
     fetch(transactionUrl, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${userID}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
@@ -97,6 +97,7 @@ const TransactionPage = ({ setTargetExpense }) => {
             dailyOverview={dailyOverview}
             key={index}
             setTargetExpense={setTargetExpense}
+            token={token}
           />
         ))}
       </div>

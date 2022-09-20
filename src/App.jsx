@@ -53,7 +53,10 @@ function App() {
               <Route
                 path="/personal/transactions"
                 element={
-                  <TransactionPage setTargetExpense={setTargetExpense} />
+                  <TransactionPage
+                    setTargetExpense={setTargetExpense}
+                    token={token}
+                  />
                 }
               />
 

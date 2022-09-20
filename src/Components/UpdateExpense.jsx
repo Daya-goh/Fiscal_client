@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 const SERVER = import.meta.env.VITE_SERVER;
 
-const UpdateExpense = ({ targetExpense }) => {
+const UpdateExpense = ({ targetExpense, token }) => {
   console.log(targetExpense);
   const [category, setCategory] = useState([]);
   const navigate = useNavigate();
@@ -50,6 +50,7 @@ const UpdateExpense = ({ targetExpense }) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(values),
       })
