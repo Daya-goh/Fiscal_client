@@ -1,8 +1,9 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import IncomeForm from "../Components/IncomeForm";
 import FixedExpenditureForm from "../Components/FixedExpenditureForm";
 import SavingsForm from "../Components/SavingsForm";
 import AllowanceBudgetPage from "../Components/AllowanceBudgetPage";
+import UserBudgetLog from "../Components/UserBudgetLog";
 
 function BudgetPage() {
   return (
@@ -15,6 +16,9 @@ function BudgetPage() {
             <FixedExpenditureForm />
             <SavingsForm />
             <AllowanceBudgetPage />
+          </div>
+          <div className="bg-white dark:bg-slate-900 py-6 sm:py-8 lg:py-12">
+            <UserBudgetLog />
           </div>
         </div>
       </div>
