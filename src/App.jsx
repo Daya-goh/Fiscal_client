@@ -26,7 +26,7 @@ function App() {
   const [targetExpense, setTargetExpense] = useState({});
   const [userName, setUsername] = useState("");
   const [token, setToken] = useState("");
-  const [newBudget, setNewBudget] = useState(false); 
+  const [newBudget, setNewBudget] = useState(false);
 
   return (
     <div className="App">
@@ -64,8 +64,22 @@ function App() {
               />
 
               {/* <Route path="/personal/budget" element={<BudgetPage />} /> */}
-              <Route path="/personal/budget" element={<RebudgetPage setNewBudget={setNewBudget} />} />
-              <Route path="/personal/budget/history" element={<BudgetHistoryPage token={token} newBudget={newBudget} setNewBudget={setNewBudget} />} />
+              <Route
+                path="/personal/budget"
+                element={
+                  <RebudgetPage setNewBudget={setNewBudget} token={token} />
+                }
+              />
+              <Route
+                path="/personal/budget/history"
+                element={
+                  <BudgetHistoryPage
+                    token={token}
+                    newBudget={newBudget}
+                    setNewBudget={setNewBudget}
+                  />
+                }
+              />
               <Route path="/personal/settings" element={<SettingsPage />} />
               <Route path="/personal/analysis" element={<AnalysisPage />}>
                 <Route index element={<ExpensesMonth />} />

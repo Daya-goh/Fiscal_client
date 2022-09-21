@@ -11,6 +11,74 @@ function BudgetHistoryPage({ token, newBudget, setNewBudget }) {
 
   console.log("newBudget from PROPS:", newBudget);
 
+  //   useEffect(() => {
+  //     fetch(budgetHistoryURL, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         // setBudgetData(data)
+  //         setOldBudgetToInactive(data);
+
+  //         // setBudgetData();
+  //       });
+  //   }, [budgetData, newBudget]);
+  //   console.log("Budget data retrieved from server:", budgetData);
+
+  //   const setOldBudgetToInactive = (data) => {
+  //     // if (newBudget === true) {
+  //     //   const toUpdate = data.slice(0, data.length - 1);
+  //     //   const updated = [];
+  //     //   toUpdate.map((budgetEntry) => {
+  //     //     budgetEntry.active = false;
+  //     //     fetch(`${SERVER}rebudget/${budgetEntry._id}`, {
+  //     //       method: "PUT",
+  //     //       headers: {
+  //     //         "Content-Type": "application/json",
+  //     //         Authorization: `Bearer ${token}`,
+  //     //       },
+  //     //       body: JSON.stringify(budgetEntry),
+  //     //     })
+  //     //       .then((response) => response.json())
+  //     //       .then((dataFinal) => {
+  //     //         updated.push(dataFinal);
+  //     //         updated.push(data[data.length - 1]);
+  //     //         setBudgetData(updated);
+  //     //         // return updated;
+  //     //       });
+  //     //   });
+
+  //     //   // console.log("Updated the active state for older budget entries:", updated);
+  //     //   console.log("toUpdate:", toUpdate);
+  //     //   console.log("data:", data);
+  //     //   //   updated.push(data[data.length - 1]);
+  //     //   //   setBudgetData(updated);
+  //     //   console.log("updated:", updated);
+  //     //   setNewBudget(false);
+  //     // }
+  //     if (newBudget === true) {
+  //       data[data.length - 2].active = false;
+  //       console.log(data[data.length - 2]);
+  //       fetch(`${SERVER}rebudget/${data[data.length - 2]._id}`, {
+  //         method: "PUT",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         body: JSON.stringify(data[data.length - 2]),
+  //       })
+  //         .then((response) => response.JSON())
+  //         .then((dataFinal) => {
+  //           console.log(dataFinal);
+  //           //   setBudgetData(dataFinal);
+  //           setNewBudget(false);
+  //         });
+  //     }
+  //   };
+
   useEffect(() => {
     fetch(budgetHistoryURL, {
       headers: {
@@ -19,41 +87,10 @@ function BudgetHistoryPage({ token, newBudget, setNewBudget }) {
       },
     })
       .then((response) => response.json())
-      .then((data) => {
-        // setBudgetData(data)
-        setOldBudgetToInactive(data);
-      });
-  }, [budgetData, newBudget]);
-  console.log("Budget data retrieved from server:", budgetData);
+      .then((data) => setBudgetData(data));
+  }, []);
 
-  const setOldBudgetToInactive = (data) => {
-    if (newBudget === true) {
-      const toUpdate = data.slice(0, data.length - 1);
-      const updated = [];
-      toUpdate.map((budgetEntry) => {
-        budgetEntry.active = false;
-        fetch(`${SERVER}rebudget/${budgetEntry._id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(budgetEntry),
-        })
-          .then((response) => response.json())
-          .then((data) => updated.push(data));
-      });
-      // console.log("Updated the active state for older budget entries:", updated);
-      console.log("toUpdate:", toUpdate);
-      console.log("data:", data);
-      updated.push(data[data.length - 1]);
-      setBudgetData(updated);
-      console.log("updated:", updated);
-      setNewBudget(false);
-    }
-  };
-
-  const budgetMap = budgetData.map((budget, index) => (
+  const budgetMap = budgetData?.map((budget, index) => (
     <div
       key={index}
       className="card w-96 bg-base-100 shadow-xl border-2 border-yellow-300 rounded-md m-2 gap-2"
