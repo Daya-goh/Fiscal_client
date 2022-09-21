@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { PersonContext } from "../App";
 
-const url = "http://localhost:4856/rebudget";
+const url = "http://localhost:4856/rebudget/create";
 const SERVER = import.meta.env.VITE_SERVER;
 
 function RebudgetPage({ setNewBudget, token }) {
