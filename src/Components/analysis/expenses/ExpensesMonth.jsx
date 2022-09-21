@@ -21,7 +21,7 @@ const allCategories = ["Food","Shopping","Transport","Medical","Personal care","
 
 
 //* E.g. Just interested in ONE MONTH, e.g. September
-const calculateCatCostPerDay = (expenseData, category, month) => {
+const calculateCatCostPerDay = (expenseData, category) => {
 
     //* Reorganised the data by categories (as the key)
         const fullData = {};
@@ -56,7 +56,7 @@ const calculateCatCostPerDay = (expenseData, category, month) => {
 /*===============================================================*/
 /*===============================================================*/
 
-function ExpensesMonth() {
+function ExpensesMonth({ token }) {
 
 // Month / Year toggle buttons 
     const navigate = useNavigate();
@@ -86,7 +86,12 @@ function ExpensesMonth() {
     const [data, setData] = useState([]); 
     useEffect(() => {
         const analysisURL = `${SERVER}analysis/month/${DBfilter}`; 
-        fetch(analysisURL).then(response => response.json()).then(data => setData(data))
+        fetch(analysisURL, {
+            headers: {
+                "Content-Type": "application/json", 
+                "Authorization": `Bearer ${token}`
+            }
+        }).then(response => response.json()).then(data => setData(data))
     }, [month]); 
     console.log("Data retrieved from server:", data);
 
@@ -127,7 +132,7 @@ function ExpensesMonth() {
 
       <h2> This is the Charts analysis page.</h2>
       <VictoryChart theme={VictoryTheme.material} domainPadding={20}>
-        <VictoryAxis tickFormat={xaxisDates} label="Days in the month" style={{
+        <VictoryAxis tickFormat={xaxisDates} label="Days" style={{
           axisLabel: {fontSize:7, padding:18}, 
           tickLabels: {fontSize: 4, padding: 3}
         }} />
@@ -138,7 +143,7 @@ function ExpensesMonth() {
 
         <VictoryStack colorScale={"warm"}>
           {allCategories.map((cat) => (
-            <VictoryBar labels={arr} data={calculateCatCostPerDay(data, cat, monthDBsearch)} style={{labels: {fontSize: 4}}} />
+            <VictoryBar labels={arr} data={calculateCatCostPerDay(data, cat)} style={{labels: {fontSize: 4}}} />
           ))}
         </VictoryStack>
       </VictoryChart>

@@ -11,39 +11,39 @@ import expenseData from "../expenseSeed";
 expenseData;
 import { getMonth, getYear } from "date-fns";
 import { add, format, sub } from "date-fns/esm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const allCategories = ["Food","Shopping","Transport","Medical","Personal care","Gifts","House","Others",];
 
 /*===============================================================
 EXPENSES | Comparing across the categories FOR THAT MONTH
 ===============================================================*/
-//* Reorganised the data by categories (as the key)
-const fullData = {};
-allCategories.map((category) => {
-  fullData[category] = expenseData.filter(
-    (entry) => entry.category === category
-  );
-});
-// console.log("fullData:", fullData);
 
 //* Ultimate function to churn out the category data to be plotted (inside it contains the months)
-const countCatCost = (cat) => {
-  const plotData = [];
+const countCatCost = (data, cat) => {
+  
+  // Reorganised the data by categories (as the key)
+    const fullData = {};
+    allCategories.map((category) => {
+      fullData[category] = data.filter(
+        (entry) => entry.category.category === category
+      );
+    });
 
   // Function to calculate cost
-  const calculateCatCostPerMth = (month, num, category) => {
-    let totalCost = 0;
-    fullData[category]
-      .filter((entry) => entry.date.split("-")[1] === num)
-      .map((entry) => (totalCost += entry.amount));
-    // console.log(`Total cost of ${cat} in ${month}`, totalCost);
+    const plotData = [];
+    const calculateCatCostPerMth = (month, num, category) => {
+      let totalCost = 0;
+      fullData[category]
+        .filter((entry) => entry.date.split("-")[1] === num)
+        .map((entry) => (totalCost += entry.amount));
+      // console.log(`Total cost of ${cat} in ${month}`, totalCost);
 
-    const data = {};
-    data.x = month;
-    data.y = totalCost;
-    plotData.push(data);
-  };
+      const monthData = {};
+      monthData.x = month;
+      monthData.y = totalCost;
+      plotData.push(monthData);
+    };
 
   //TODO Might need to automate the months array as well??
   const months = [
@@ -65,25 +65,22 @@ const countCatCost = (cat) => {
 };
 // console.log("Food cost:", countCatCost("food"));
 
-function ExpensesYear() {
-  const navigate = useNavigate();
-  const currentYear = getYear(new Date());
-  const currentMonth = getMonth(new Date());
+/*===============================================================*/
+/*===============================================================*/
 
-  const monthsSpeltOut = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct",];
+function ExpensesYear({ token }) {
+  const navigate = useNavigate();
 
   const handleMonth = () => {
-    // navigate(`/expenses/month/${monthsSpeltOut[currentMonth]}`);
     navigate(`/personal/analysis/expenses/month/`);
   };
 
   const handleYear = () => {
-    // navigate(`/expenses/year/${currentYear}`);
     navigate(`/personal/analysis/expenses/year`);
   };
 
 
-//* Create state to store which month is clicked 
+//* Create state to store which year is clicked 
     const [year, setYear] = useState(new Date())
     const handleAdd = () => {
       setYear(add(year, { years: 1 })); 
@@ -98,9 +95,17 @@ function ExpensesYear() {
 
 //* FETCHING data from server
     const SERVER = import.meta.env.VITE_SERVER; 
-    const [data, setData] = useState([]); 
-    
-
+    const [yearDataRetrieved, setYearDataRetrieved] = useState([]); 
+    useEffect(() => {
+      const analysisURL = `${SERVER}analysis/year/${yearDBsearch}`; 
+      fetch(analysisURL, {
+        headers: {
+          "Content-Type": "application/json", 
+          "Authorization": `Bearer ${token}`
+        }
+      }).then(response => response.json()).then(data => setYearDataRetrieved(data))
+    }, [year]); 
+    // console.log("Year Data retrieved from server:", yearDataRetrieved);
 
   //* Putting here so that x-axis values can be plotted:
   const months = [
@@ -130,12 +135,18 @@ function ExpensesYear() {
         <button onClick={handleAdd}>Next Year</button>
       </div>
       <VictoryChart theme={VictoryTheme.material} domainPadding={20}>
-        <VictoryAxis tickFormat={months.map(row => row[0])} />
-        <VictoryAxis dependentAxis tickFormat={(x) => `$${x}`} />
+        <VictoryAxis tickFormat={months.map(row => row[0])} label="Months" style={{
+          axisLabel: {fontSize:7, padding:18}, 
+          tickLabels: {fontSize: 4, padding: 3}
+        }} />
+        <VictoryAxis dependentAxis tickFormat={(x) => `$${x}`} label="Expenses($)" style={{
+          axisLabel: {fontSize:7, padding:30}, 
+          tickLabels: {fontSize: 4, padding: 3}
+        }} />
 
-        <VictoryStack colorScale={"warm"}>
+        <VictoryStack>
           {allCategories.map((cat) => (
-            <VictoryBar data={countCatCost(cat)} />
+            <VictoryBar data={countCatCost(yearDataRetrieved, cat)} style={{labels: {fontSize: 4}}} />
           ))}
         </VictoryStack>
       </VictoryChart>

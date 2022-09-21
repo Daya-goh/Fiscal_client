@@ -7,41 +7,22 @@ import {
   VictoryStack,
   VictoryTheme,
 } from "victory";
-import expenseData from "../expenseSeed";
+// import expenseData from "../expenseSeed";
 import { getMonth, getYear } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addMonths, format, subMonths } from "date-fns/esm";
 
-const allCategories = [
-  "food",
-  "shopping",
-  "transport",
-  "medical",
-  "personal care",
-  "gifts",
-  "house",
-  "others",
-];
-//* Reorganised the data by categories (as the key)
-const fullData = {};
-allCategories.map((category) => {
-  fullData[category] = expenseData.filter(
-    (entry) => entry.category === category
-  );
-});
-// console.log("fullData:", fullData);
 
 /*===============================================================
 BALANCE | Deficit or Surplus across the DAYS for THAT MONTH
 ===============================================================*/
 
 //* Only interested in ONE MONTH, e.g. September
-const balanceByDay = (month) => {
+const balanceByDay = (data, month) => {
   let count = 0;
   let monthData = {};
 
-  expenseData
-    .filter((entry) => entry.date.split("-")[1] === month)
+  data
     .map((entry) => {
       const date = entry.date.split("-")[2];
       if (Number(date) === count) {
@@ -53,7 +34,8 @@ const balanceByDay = (month) => {
     });
   // return monthData;
 
-  const budget = 20;
+  //! To wait for Qian Yi's budget update
+    const budget = 20;
 
   const plotData = [];
   for (const key in monthData) {
@@ -63,7 +45,10 @@ const balanceByDay = (month) => {
 };
 // console.log(balanceByDay());
 
-function BalanceMonth() {
+/*===============================================================*/
+/*===============================================================*/
+
+function BalanceMonth({ token }) {
   const navigate = useNavigate();
   const currentYear = getYear(new Date());
   const currentMonth = getMonth(new Date());
@@ -83,39 +68,52 @@ function BalanceMonth() {
     "December"
   ];
 
-  const handleMonth = () => {
-    navigate(`/personal/analysis/balance/month`);
-  };
-
-  const handleYear = () => {
-    navigate(`/personal/analysis/balance/year`);
-  };
+    // Toggle Month/Year Tab:
+        const handleMonth = () => {
+            navigate(`/personal/analysis/balance/month`);
+        };
+        const handleYear = () => {
+            navigate(`/personal/analysis/balance/year`);
+        };
 
 
     //* Create state to store which month is clicked 
-    const [month, setMonth] = useState(new Date())
-    // const result = format(new Date(2014, 6, 2), "do 'de' MMMM yyyy",
-
-    const handleAdd = () => {
-      setMonth(addMonths(month, 1)); 
-    }; 
-
-    const handleSub = () => {
-      setMonth(subMonths(month, 1)); 
-    }; 
+        const [month, setMonth] = useState(new Date())
+        const handleAdd = () => {
+        setMonth(addMonths(month, 1)); 
+        }; 
+        const handleSub = () => {
+        setMonth(subMonths(month, 1)); 
+        }; 
 
     const dayOfWk = monthsSpeltOut[getMonth(month)]; 
     const monthDBsearch = format(month, "yyyy-MM-dd").split("-")[1]; 
-//     // console.log(monthDBsearch);
 
-// //* Just to plot out the x-axis values: 
-    const filteredData = expenseData.filter(entry => entry.date.split("-")[1] === monthDBsearch); 
-    const entriesDates = []; 
-    filteredData.map(entry => entriesDates.push(entry.date)); 
 
-// //! Wanted to check which type of x-axis values I should display: (full date or just the day number)
-  // const xaxisDates = Array.from(new Set(entriesDates)); 
-  const xaxisDates = new Set(entriesDates); 
+    //* FETCHING data from server
+        const SERVER = import.meta.env.VITE_SERVER; 
+        const DBfilter = format(month, "yyyy-MM-dd"); 
+        const [monthDataForBalance, setMonthDataForBalance] = useState([]); 
+        useEffect(() => {
+            const analysisURL = `${SERVER}analysis/month/${DBfilter}`; 
+            fetch(analysisURL, {
+              headers: {
+                "Content-Type": "application/json", 
+                "Authorization": `Bearer ${token}`
+              }
+            }).then(response => response.json()).then(data => setMonthDataForBalance(data))
+        }, [month]); 
+        console.log("Data retrieved from server:", monthDataForBalance);
+
+
+    //* Plotting out the x-axis values: 
+        // const filteredData = expenseData.filter(entry => entry.date.split("-")[1] === monthDBsearch); 
+        // const entriesDates = []; 
+        // filteredData.map(entry => entriesDates.push(entry.date)); 
+        const entriesDates = []; 
+        monthDataForBalance.map(entry => entriesDates.push(format((Date.parse(entry.date)), "yyyy-MM-dd").split("-")[2]));
+        const xAxisDates = Array.from(new Set(entriesDates)); 
+
 
   return (
     <>
@@ -129,10 +127,16 @@ function BalanceMonth() {
         <button onClick={handleAdd}>Next Month</button>
       </div>
       <VictoryChart theme={VictoryTheme.material} domainPadding={20}>
-        <VictoryAxis tickFormat={xaxisDates} />
-        <VictoryAxis dependentAxis tickFormat={(x) => `$${x}`} />
+        <VictoryAxis tickFormat={xAxisDates} label="Days" style={{
+          axisLabel: {fontSize:7, padding:18}, 
+          tickLabels: {fontSize: 4, padding: 3}
+        }} />
+        <VictoryAxis dependentAxis tickFormat={(x) => `$${x}`} label="Expenses($)" style={{
+          axisLabel: {fontSize:7, padding:30}, 
+          tickLabels: {fontSize: 4, padding: 3}
+        }} />
 
-        <VictoryBar data={balanceByDay(monthDBsearch)} />
+        <VictoryBar data={balanceByDay(monthDataForBalance, monthDBsearch)} />
       </VictoryChart>
     </>
   );
