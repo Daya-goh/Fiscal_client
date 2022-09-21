@@ -1,6 +1,9 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import * as yup from "yup";
+import { PersonContext } from "../App";
+
+const SERVER = import.meta.env.VITE_SERVER;
 
 const initialValues = {
   income: [
