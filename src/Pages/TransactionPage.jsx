@@ -12,8 +12,23 @@ const TransactionPage = ({ setTargetExpense, token }) => {
   const [transaction, setTransaction] = useState([]);
   const [date, setDate] = useState(new Date());
   const userID = useContext(PersonContext);
+  const [budget, setBudget] = useState([]);
 
   useEffect(() => {
+    //* fetch budget data
+    const budgetURL = `${SERVER}rebudget/active`;
+    fetch(budgetURL, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((budgetData) => {
+        console.log(budgetData[0].allowance);
+        setBudget(budgetData[0].allowance);
+      });
+
     const month = getMonth(date) + 1;
 
     const transactionUrl = `${SERVER}transactions/${month}`;
@@ -28,23 +43,25 @@ const TransactionPage = ({ setTargetExpense, token }) => {
         const x = renderArray(data, date);
         setTransaction(x);
       });
-  }, [date, userID]);
+  }, [date, userID, budget]);
+  // console.log(budget);
+  console.log(budget);
 
+  //* function to handle logic
   const renderArray = (data, date) => {
     const currentMonth = getMonth(date); //index
     const currentYear = getYear(date);
     const numberOfDays = getDaysInMonth(date);
 
     let array = []; //to store containers for transactions per day
-
     //creates container for each day of the month
     for (let i = 1; i <= numberOfDays; i++) {
       //container to hold data
       const dayContainer = {
         date: `${i}-${currentMonth + 1}-${currentYear}`,
-        budget: 50,
+        budget: (budget / numberOfDays).toFixed(2),
         logArray: [],
-        remainder: 50,
+        remainder: (budget / numberOfDays).toFixed(2),
       };
       array.push(dayContainer);
     }
@@ -61,7 +78,7 @@ const TransactionPage = ({ setTargetExpense, token }) => {
     //calculating the leftover
     for (const day of array) {
       for (const expense of day.logArray) {
-        day.remainder = day.remainder - expense.amount;
+        day.remainder = (day.remainder - expense.amount).toFixed(2);
       }
     }
 

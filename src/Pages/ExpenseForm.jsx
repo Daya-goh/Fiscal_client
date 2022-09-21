@@ -22,8 +22,13 @@ const ExpenseForm = ({ token }) => {
       .then((data) => {
         setCategory(data);
       });
-    const urlActiveBudget = `${SERVER}budget/active/`;
-    fetch(urlActiveBudget)
+    const urlActiveBudget = `${SERVER}rebudget/active/`;
+    fetch(urlActiveBudget, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         setBudgetData(data);
