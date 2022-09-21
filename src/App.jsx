@@ -92,10 +92,6 @@ function App() {
                   element={<ExpensesYear token={token} />}
                 />
                 <Route
-                  path="/personal/analysis/savings/year"
-                  element={<SavingsYear />}
-                />
-                <Route
                   path="/personal/analysis/balance/month"
                   element={<BalanceMonth token={token} />}
                 />
