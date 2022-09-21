@@ -5,10 +5,31 @@ import * as Yup from "yup";
 import { PersonContext } from "../App";
 
 const url = "http://localhost:4856/rebudget";
+const SERVER = import.meta.env.VITE_SERVER;
 
-function RebudgetPage({ setNewBudget }) {
-    const userID = useContext(PersonContext); 
-    const navigate = useNavigate(); 
+function RebudgetPage({ setNewBudget, token }) {
+  const userID = useContext(PersonContext);
+  const budgetHistoryURL = `${SERVER}rebudget`;
+  const navigate = useNavigate();
+
+  const setOldBudgetToInactive = (data) => {
+    data[data.length - 2].active = false;
+    console.log(data[data.length - 2]);
+    fetch(`${SERVER}rebudget/${data[data.length - 2]._id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data[data.length - 2]),
+    })
+      .then((response) => response.JSON())
+      .then((dataFinal) => {
+        console.log(dataFinal);
+        //   setBudgetData(dataFinal);
+        // setNewBudget(false);
+      });
+  };
 
   //* Creation of form using Formik
   const formik = useFormik({
@@ -16,7 +37,7 @@ function RebudgetPage({ setNewBudget }) {
       income: "",
       fixedExpenditure: "",
       savings: "",
-      active: true,
+      // active: true,
     },
     validationSchema: Yup.object({
       income: Yup.number().required("Required"),
@@ -26,30 +47,51 @@ function RebudgetPage({ setNewBudget }) {
       savings: Yup.number()
         .min(0, "Please put 0 if there is none")
         .required("Required"),
-      active: Yup.boolean().required("Required"),
+      // active: Yup.boolean().required("Required"),
     }),
     onSubmit: async (values) => {
       alert(
-        JSON.stringify({ user_id: userID, 
-          ...values,
-          allowance: values.income - values.fixedExpenditure - values.savings,
-        }, null, 2)
-      );
-
-      const res = await fetch(url, {
-        method: "POST", 
-        headers: {
-            "Content-Type": "application/json", 
-        }, 
-        body: JSON.stringify({ user_id: userID, 
+        JSON.stringify(
+          {
+            user_id: userID,
             ...values,
             allowance: values.income - values.fixedExpenditure - values.savings,
-          })
-      }); 
-      const data = await res.json(); 
+            active: true,
+          },
+          null,
+          2
+        )
+      );
+      fetch(budgetHistoryURL, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // setBudgetData(data)
+          setOldBudgetToInactive(data);
+
+          // setBudgetData();
+        });
+
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userID,
+          ...values,
+          allowance: values.income - values.fixedExpenditure - values.savings,
+          active: true,
+        }),
+      });
+      const data = await res.json();
       console.log("New Budget created:", data);
-      navigate("/personal/budget/history"); 
-      setNewBudget(true); 
+      navigate("/personal/budget/history");
+      setNewBudget(true);
     },
   });
 
@@ -116,7 +158,7 @@ function RebudgetPage({ setNewBudget }) {
           ) : null}
         </div>
 
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
           <label>Active</label>
           <select
             name="active"
@@ -124,7 +166,9 @@ function RebudgetPage({ setNewBudget }) {
             className="input input-bordered w-full max-w-xs"
           >
             {" "}
-            <option selected value="true">Active</option>
+            <option selected value="true">
+              Active
+            </option>
             <option value="false">Inactive</option>
           </select>
           {formik.errors.active ? (
@@ -132,7 +176,7 @@ function RebudgetPage({ setNewBudget }) {
               {formik.errors.active}
             </div>
           ) : null}
-        </div>
+        </div> */}
 
         <button
           type="submit"
