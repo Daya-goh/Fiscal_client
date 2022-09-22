@@ -21,6 +21,7 @@ import BalanceMonth from "./Components/analysis/balance/BalanceMonth";
 import BalanceYear from "./Components/analysis/balance/BalanceYear";
 import RebudgetPage from "./Pages/RebudgetPage";
 import BudgetHistoryPage from "./Pages/BudgetHistoryPage";
+import LandingPage from "./Pages/LandingPage";
 export const PersonContext = createContext();
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
       <PersonContext.Provider value={userName}>
         <BrowserRouter>
           <Routes>
+            <Route path="/" element={<LandingPage />} />
             <Route
               path="/login"
               element={
