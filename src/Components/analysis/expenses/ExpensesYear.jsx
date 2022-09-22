@@ -4,8 +4,10 @@ import {
   VictoryAxis,
   VictoryBar,
   VictoryChart,
+  VictoryLegend,
   VictoryStack,
   VictoryTheme,
+  VictoryTooltip
 } from "victory";
 import expenseData from "../expenseSeed";
 expenseData;
@@ -37,7 +39,6 @@ const countCatCost = (data, cat) => {
       fullData[category]
         .filter((entry) => entry.date.split("-")[1] === num)
         .map((entry) => (totalCost += entry.amount));
-      // console.log(`Total cost of ${cat} in ${month}`, totalCost);
 
       const monthData = {};
       monthData.x = month;
@@ -63,7 +64,6 @@ const countCatCost = (data, cat) => {
   months.map((month) => calculateCatCostPerMth(month[0], month[1], cat));
   return plotData;
 };
-// console.log("Food cost:", countCatCost("food"));
 
 /*===============================================================*/
 /*===============================================================*/
@@ -91,7 +91,6 @@ function ExpensesYear({ token }) {
 
 //TODO MongoDB find() before sending to client!
   const yearDBsearch = format(year, "yyyy-MM-dd").split("-")[0]; 
-  // console.log(yearDBsearch);
 
 //* FETCHING data from server
     const SERVER = import.meta.env.VITE_SERVER; 
@@ -101,12 +100,12 @@ function ExpensesYear({ token }) {
       fetch(analysisURL, {
         headers: {
           "Content-Type": "application/json", 
-          "Authorization": `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         }
       }).then(response => response.json()).then(data => setYearDataRetrieved(data))
     }, [year]); 
-    // console.log("Year Data retrieved from server:", yearDataRetrieved);
 
+    
   //* Putting here so that x-axis values can be plotted:
   const months = [
     ["Jan", "01"],
@@ -134,19 +133,49 @@ function ExpensesYear({ token }) {
         <h3>{yearDBsearch}</h3>
         <button onClick={handleAdd}>Next Year</button>
       </div>
+      <h2>Expenditure across the year of {yearDBsearch}</h2>
+
       <VictoryChart theme={VictoryTheme.material} domainPadding={20}>
         <VictoryAxis tickFormat={months.map(row => row[0])} label="Months" style={{
           axisLabel: {fontSize:7, padding:18}, 
           tickLabels: {fontSize: 4, padding: 3}
         }} />
-        <VictoryAxis dependentAxis tickFormat={(x) => `$${x}`} label="Expenses($)" style={{
+        <VictoryAxis dependentAxis tickFormat={(x) => `$${x}`} label="Expenses ($)" style={{
           axisLabel: {fontSize:7, padding:30}, 
           tickLabels: {fontSize: 4, padding: 3}
         }} />
 
-        <VictoryStack>
-          {allCategories.map((cat) => (
-            <VictoryBar data={countCatCost(yearDataRetrieved, cat)} style={{labels: {fontSize: 4}}} />
+      <VictoryLegend x={120} y={10} 
+        title="Legend"
+        centerTitle orientation="horizontal"
+        itemsPerRow={4}
+        gutter={8}
+        symbolSpacer={2}
+        borderPadding={{ top: 0, bottom: 3, left: 5, right: 0 }}
+        style={{ 
+          border: { stroke: "black" }, 
+        title: {fontSize: 7}, 
+        labels: {fontSize: 4}
+      }}
+        data={[
+          {name: "Food", symbol: {fill: "#FE4A49"}}, 
+          {name: "Transport", symbol: {fill: "#FED766"}}, 
+          {name: "Medical", symbol: {fill: "#6874E8"}}, 
+          {name: "Shopping", symbol: {fill: "#2AB7CA"}}, 
+          {name: "Personal Care", symbol: {fill: "#262626"}}, 
+          {name: "Gifts", symbol: {fill: "#EADAA2"}}, 
+          {name: "House", symbol: {fill: "#CEE397"}}, 
+          {name: "Others", symbol: {fill: "#CC998D"}}
+        ]} />
+
+        <VictoryStack colorScale={["#FE4A49", "#2AB7CA", "#FED766", "#6874E8", "#262626", "#EADAA2", "#CEE397" ,"#CC998D"]}   style={{ data: { stroke: "black", strokeWidth: 0.8 } }}>
+          {allCategories.map((cat, index) => (
+            <VictoryBar key={index} horizontal
+            data={countCatCost(yearDataRetrieved, cat)} 
+            labels={({ datum }) => datum.y!== 0 ? datum.y : ""}
+            labelComponent={<VictoryTooltip dy={0} />}
+            barWidth={19}
+            style={{labels: {fontSize: 4}}} />
           ))}
         </VictoryStack>
       </VictoryChart>
