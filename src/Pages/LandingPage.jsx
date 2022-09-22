@@ -15,7 +15,8 @@ function LandingPage() {
               <div className="max-w-3xl mx-auto text-center mb-4">
                 <div className="hero-content">
                   <img
-                    src="../Logored.png"
+                    src="../logored.png"
+                    loading="lazy"
                     alt="logo"
                     className="w-24 animate-pulse "
                   />
