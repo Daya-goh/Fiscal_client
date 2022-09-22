@@ -29,9 +29,18 @@ function LoginPage({ setUsername, setToken }) {
       const data = await res.json();
       console.log("Response for login:", data);
       console.log(data);
-      setUsername(data.userid);
-      setToken(data.token);
-      navigate("/personal");
+
+      if (data.msg === "No such user found."){
+        alert("No such user found. Please create an account."); 
+        navigate("/login"); 
+      } else if (data.msg ==="Wrong password."){
+        alert("Wrong password. Please try again."); 
+        navigate("/login"); 
+      } else {
+        setUsername(data.userid);
+        setToken(data.token);
+        navigate("/personal");
+      }
     },
   });
 

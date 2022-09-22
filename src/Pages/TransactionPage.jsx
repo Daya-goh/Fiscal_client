@@ -70,7 +70,7 @@ const TransactionPage = ({ setTargetExpense, token }) => {
     data.forEach((log) => {
       // -1 due to index positioning of array
 
-      array[getDate(Date.parse(log.date)) - 1]?.logArray.push(log);
+      array[getDate(Date.parse(log.date)) -1 ]?.logArray.push(log);
     });
 
     //Number(log.date.split("T")[0].split("-")[2]
