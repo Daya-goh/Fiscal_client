@@ -87,31 +87,65 @@ function BudgetHistoryPage({ token, newBudget, setNewBudget }) {
       },
     })
       .then((response) => response.json())
-      .then((data) => setBudgetData(data));
+      .then((data) => {
+        const reversedData = data.reverse();
+        setBudgetData(reversedData);
+      });
   }, []);
 
-  const budgetMap = budgetData?.map((budget, index) => (
-    <div
-      key={index}
-      className="card w-96 bg-base-100 shadow-xl border-2 border-yellow-300 rounded-md m-2 gap-2"
-    >
-      <h4>Income: {budget.income}</h4>
-      <h4>Fixed Expenditure: {budget.fixedExpenditure}</h4>
-      <h4>Savings: {budget.savings}</h4>
-      <h4>Allowance: {budget.allowance}</h4>
-      <h4>Active: {budget.active === true ? "Yes" : "No"}</h4>
-    </div>
-  ));
   //   return budgetMap;
 
   return (
-    <>
-      <h1>BUDGET HISTORY</h1>
-      {budgetMap}
-      <button onClick={() => navigate("/personal/budget")}>
-        Create new budget
-      </button>
-    </>
+    <div
+      className="w-screen h-screen bg-cover"
+      style={{
+        backgroundImage: `url("https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771&q=80)`,
+      }}
+    >
+      <div className="overflow-x-auto flex flex-col items-center gap-6 bg-white bg-opacity-25 h-screen">
+        <h1 className="font-bold text-3xl mt-6">BUDGET HISTORY</h1>
+
+        <table className="table w-2/3">
+          <thead>
+            <tr>
+              <th className=" flex justify-center ">
+                <button
+                  onClick={() => navigate("/personal/budget")}
+                  className="btn btn-ghost text-xl"
+                >
+                  +
+                </button>
+              </th>
+              <th className="text-center">Income</th>
+              <th className="text-center">Fixed Expenditures</th>
+              <th className="text-center">Savings</th>
+              <th className="text-center">Allowance</th>
+              <th className="text-center">Active</th>
+            </tr>
+          </thead>
+
+          {budgetData?.map((budget, index) => (
+            <tbody key={index}>
+              <tr className="hover">
+                <th
+                  className="text-center
+                "
+                >
+                  {index + 1}
+                </th>
+                <td className="text-center">$ {budget.income}</td>
+                <td className="text-center">$ {budget.fixedExpenditure}</td>
+                <td className="text-center">$ {budget.savings}</td>
+                <td className="text-center">$ {budget.allowance}</td>
+                <td className="text-center">
+                  {budget.active === true ? "Yes" : "No"}
+                </td>
+              </tr>
+            </tbody>
+          ))}
+        </table>
+      </div>
+    </div>
   );
 }
 

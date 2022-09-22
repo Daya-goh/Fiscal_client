@@ -23,11 +23,11 @@ const DayTransaction = ({ dailyOverview, index, setTargetExpense, token }) => {
   return (
     <div>
       <div
-        className="card w-96 bg-base-100 shadow-xl border-2 border-yellow-300 rounded-md m-2 gap-2"
+        className="card w-72 bg-base-100 shadow-xl border-2 border-yellow-300 rounded-md m-2 gap-2"
         key={index}
       >
-        <div className="flex flex-row w-96 justify-center">
-          <div>{dailyOverview.date}</div>
+        <div className="flex flex-row w-72 justify-center">
+          <div className="font-medium">{dailyOverview.date}</div>
         </div>
 
         <div className="flex justify-between px-3">
@@ -42,17 +42,17 @@ const DayTransaction = ({ dailyOverview, index, setTargetExpense, token }) => {
             key={index}
             onClick={(event) => handleClick(event)}
           >
-            <div className="flex items-center w-32" id={expenses._id}>
+            <div className="flex items-center w-24" id={expenses._id}>
               {expenses.category.category}
             </div>
             <div
-              className="flex items-center justify-center text-xs w-32"
+              className="flex items-center justify-center text-center text-xs w-24"
               id={expenses._id}
             >
               {expenses.name}
             </div>
             <div
-              className="flex items-center justify-end w-32"
+              className="flex items-center justify-end w-24"
               id={expenses._id}
             >
               -${expenses.amount}

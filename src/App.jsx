@@ -8,7 +8,11 @@ import LoginPage from "./Pages/LoginPage";
 import SignUpPage from "./Pages/SignUpPage";
 import TransactionPage from "./Pages/TransactionPage";
 import Overview from "./Pages/Overview";
-import SettingsPage from "./Pages/SettingsPage";
+// import BudgetPage from "../Others/BudgetPage";
+// import SettingsPage from "../Others/SettingsPage";
+// import { useState } from "react";
+
+// import SettingsPage from "./Pages/SettingsPage";
 import UpdateExpense from "./Components/UpdateExpense";
 import AnalysisPage from "./Pages/AnalysisPage";
 import ExpensesMonth from "./Components/analysis/expenses/ExpensesMonth";
@@ -37,7 +41,7 @@ function App() {
               }
             />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/personal" element={<Layout />}>
+            <Route path="/personal" element={<Layout setToken={setToken} />}>
               <Route
                 index
                 element={<Overview token={token} userName={userName} />}

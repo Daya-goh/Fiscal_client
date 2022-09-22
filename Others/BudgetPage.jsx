@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import IncomeForm from "../Components/IncomeForm";
-import FixedExpenditureForm from "../Components/FixedExpenditureForm";
-import SavingsForm from "../Components/SavingsForm";
-import AllowanceBudgetPage from "../Components/AllowanceBudgetPage";
-import UserBudgetLog from "../Components/UserBudgetLog";
+import IncomeForm from "./IncomeForm";
+import FixedExpenditureForm from "../src/Components/FixedExpenditureForm";
+import SavingsForm from "./SavingsForm";
+import AllowanceBudgetPage from "./AllowanceBudgetPage";
+import UserBudgetLog from "../src/Components/UserBudgetLog";
 
 function BudgetPage() {
   return (

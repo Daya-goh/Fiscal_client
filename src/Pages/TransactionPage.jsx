@@ -97,26 +97,40 @@ const TransactionPage = ({ setTargetExpense, token }) => {
   };
 
   return (
-    <div>
-      <div>
-        <h1>Transaction Page</h1>
-      </div>
-      <button className="btn" onClick={handlePrevious}>
-        previous
-      </button>
-      <button className="btn" onClick={handleNext}>
-        Next
-      </button>
-
-      <div>
-        {transaction.map((dailyOverview, index) => (
-          <DayTransaction
-            dailyOverview={dailyOverview}
-            key={index}
-            setTargetExpense={setTargetExpense}
-            token={token}
-          />
-        ))}
+    <div
+      className="w-screen h-100% bg-fill bg-repeat"
+      style={{
+        backgroundImage: `url("https://images.unsplash.com/photo-1569959661415-5106de399f49?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80")`,
+      }}
+    >
+      <div className="bg-white bg-opacity-60">
+        <div className="flex justify-center items-center">
+          <button
+            className="btn btn-circle btn-outline border-0"
+            onClick={handlePrevious}
+          >
+            <span className="text-4xl">&#8606;</span>
+          </button>
+          <h1 className="font-bold text-4xl m-6">Transaction Page</h1>
+          <button
+            className="btn btn-circle btn-outline border-0"
+            onClick={handleNext}
+          >
+            <span className="text-4xl">&#8608;</span>
+          </button>
+        </div>
+        <div className="flex flex-row items-center justify-center w-screen">
+          <div className="flex flex-row flex-wrap justify-around w-1/2">
+            {transaction.map((dailyOverview, index) => (
+              <DayTransaction
+                dailyOverview={dailyOverview}
+                key={index}
+                setTargetExpense={setTargetExpense}
+                token={token}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
