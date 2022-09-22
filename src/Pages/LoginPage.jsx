@@ -30,12 +30,12 @@ function LoginPage({ setUsername, setToken }) {
       console.log("Response for login:", data);
       console.log(data);
 
-      if (data.msg === "No such user found."){
-        alert("No such user found. Please create an account."); 
-        navigate("/login"); 
-      } else if (data.msg ==="Wrong password."){
-        alert("Wrong password. Please try again."); 
-        navigate("/login"); 
+      if (data.msg === "No such user found.") {
+        alert("No such user found. Please create an account.");
+        navigate("/login");
+      } else if (data.msg === "Wrong password.") {
+        alert("Wrong password. Please try again.");
+        navigate("/login");
       } else {
         setUsername(data.userid);
         setToken(data.token);
@@ -102,7 +102,7 @@ function LoginPage({ setUsername, setToken }) {
             Login
           </button>
           <Link to="/signup" className="text-xs hover:text-cyan-700">
-            sign up
+            Create a new account
           </Link>
         </form>
       </div>
