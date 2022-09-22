@@ -43,76 +43,84 @@ function SignUpPage() {
   });
 
   return (
-    <div
-      className=" w-screen h-screen bg-cover "
-      style={{
-        backgroundImage: `url("https://images.unsplash.com/photo-1521671413015-ce2b0103c8c7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80")`,
-      }}
-    >
-      <div className=" flex flex-col items-center justify-center w-screen h-screen bg-cover bg-opacity-40 bg-white">
-        <div>
-          <img src="/logo.png" alt="logo" className="h-48 w-auto m-2" />
+    <div>
+      <section className="bg-cover bg-blend-darken bg-[url('https://images.unsplash.com/photo-1521671413015-ce2b0103c8c7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80')]">
+        <div className="hero-content mx-auto max-w-screen-xl lg:h-screen lg:items-center lg:flex">
+          <div className="hero-content align-bottom bg-slate-50 rounded-lg text-left overflow-hidden shadow-2xl transform transition-all">
+            <div className="max-w-xl text-center content-center mx-12">
+              <div className="hero-content">
+                <img src="./Logo.png" alt="logo" className="w-80" />
+              </div>
+              <form
+                onSubmit={formik.handleSubmit}
+                className="flex flex-col gap-4 items-center bg-slate-50 bg-opacity-70 p-5 rounded-md"
+              >
+                <h1 className="text-2xl font-extrabold text-transparent sm:text-3xl bg-clip-text bg-gradient-to-r from-rose-300 via-blue-500 to-purple-600 drop-shadow-xl mb-5">
+                  Sign up
+                </h1>
+
+                <div className="flex flex-row gap-2">
+                  <div className="flex self-center text-blue-800 m-3">Name</div>
+                  <input
+                    name="name"
+                    type="text"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.name}
+                    className="input input-bordered"
+                  />
+                </div>
+
+                <div className="flex flex-row gap-2">
+                  <div className="flex self-center text-blue-800">Username</div>
+                  <input
+                    name="username"
+                    type="text"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.username}
+                    className="input input-bordered"
+                  />
+
+                  {formik.touched.username && formik.errors.username ? (
+                    <div className="text-sm text-red-300 italic">
+                      {formik.errors.username}
+                    </div>
+                  ) : null}
+                </div>
+                <div className="flex flex-row gap-2">
+                  <div className="flex self-center text-blue-800 m-1">
+                    Password
+                  </div>
+                  <input
+                    name="password"
+                    type="password"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.password}
+                    className="input input-bordered"
+                  />
+
+                  {formik.touched.password && formik.errors.password ? (
+                    <div className="text-sm text-red-300 italic">
+                      {formik.errors.password}
+                    </div>
+                  ) : null}
+                </div>
+                <button
+                  type="submit"
+                  className="block w-full px-12 py-3 text-sm font-medium text-white bg-rose-500 border border-rose-500 rounded md:w-auto active:text-opacity-75 hover:bg-blue-500 hover:text-white focus:outline-none focus:ring drop-shadow-xl"
+                >
+                  Join
+                </button>
+                <Link to="/login" className="text-xs hover:text-cyan-700">
+                  sign in
+                </Link>
+              </form>
+            </div>
+          </div>
         </div>
-        <form
-          onSubmit={formik.handleSubmit}
-          className="flex flex-col gap-4 items-center bg-slate-50 bg-opacity-70 p-5 rounded-md"
-        >
-          <h1 className="text-3xl">Sign up</h1>
-
-          <div className="flex flex-row gap-2">
-            <div className="flex self-center">Name</div>
-            <input
-              name="name"
-              type="text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.name}
-              className="input input-bordered"
-            />
-          </div>
-
-          <div className="flex flex-row gap-2">
-            <div className="flex self-center">Username</div>
-            <input
-              name="username"
-              type="text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.username}
-              className="input input-bordered"
-            />
-
-            {formik.touched.username && formik.errors.username ? (
-              <div className="text-sm text-red-300 italic">
-                {formik.errors.username}
-              </div>
-            ) : null}
-          </div>
-          <div className="flex flex-row gap-2">
-            <div className="flex self-center">Password</div>
-            <input
-              name="password"
-              type="password"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.password}
-              className="input input-bordered"
-            />
-
-            {formik.touched.password && formik.errors.password ? (
-              <div className="text-sm text-red-300 italic">
-                {formik.errors.password}
-              </div>
-            ) : null}
-          </div>
-          <button type="submit" className="btn btn-error w-20">
-            Join
-          </button>
-          <Link to="/login" className="text-xs hover:text-cyan-700">
-            sign in
-          </Link>
-        </form>
-      </div>
+      </section>
     </div>
   );
 }

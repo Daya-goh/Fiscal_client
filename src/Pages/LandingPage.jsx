@@ -139,7 +139,7 @@ function LandingPage() {
                 aria-label=""
                 className="inline-flex items-center font-semibold transition-colors duration-200 text-purple-400 hover:text-purple-800"
               >
-                Learn more
+                Get Started
                 <svg
                   className="inline-block w-3 ml-2"
                   fill="currentColor"
