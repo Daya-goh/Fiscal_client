@@ -12,7 +12,7 @@ const ExpenseForm = ({ token }) => {
   const [budgetData, setBudgetData] = useState([]);
   const navigate = useNavigate();
   const userID = useContext(PersonContext);
-  console.log(userID);
+  // console.log(userID);
 
   /* ------------------- fetch data for category ------------------ */
   useEffect(() => {
@@ -54,13 +54,13 @@ const ExpenseForm = ({ token }) => {
       name: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      alert(
-        JSON.stringify(
-          { user_id: userID, budget_id: budgetData[0]?._id, ...values },
-          null,
-          2
-        )
-      );
+      // alert(
+      //   JSON.stringify(
+      //     { user_id: userID, budget_id: budgetData[0]?._id, ...values },
+      //     null,
+      //     2
+      //   )
+      // );
       const urlExpense = `${SERVER}expense/`;
       fetch(urlExpense, {
         method: "POST",
@@ -73,9 +73,7 @@ const ExpenseForm = ({ token }) => {
           budget_id: budgetData[0]?._id,
           ...values,
         }),
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+      }).then((response) => response.json());
 
       //on submit navigate to overview page
       navigate("/personal/transactions");

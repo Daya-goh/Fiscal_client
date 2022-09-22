@@ -9,8 +9,6 @@ function BudgetHistoryPage({ token, newBudget, setNewBudget }) {
   const [budgetData, setBudgetData] = useState([]);
   const navigate = useNavigate();
 
-  console.log("newBudget from PROPS:", newBudget);
-
   //   useEffect(() => {
   //     fetch(budgetHistoryURL, {
   //       headers: {
@@ -137,7 +135,11 @@ function BudgetHistoryPage({ token, newBudget, setNewBudget }) {
                 <td className="text-center">$ {budget.fixedExpenditure}</td>
                 <td className="text-center">$ {budget.savings}</td>
                 <td className="text-center">$ {budget.allowance}</td>
-                <td className="text-center">
+                <td
+                  className={`text-center ${
+                    budget.active === true ? `text-bold text-red-700` : ``
+                  }`}
+                >
                   {budget.active === true ? "Yes" : "No"}
                 </td>
               </tr>

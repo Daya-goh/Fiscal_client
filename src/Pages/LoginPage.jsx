@@ -27,8 +27,8 @@ function LoginPage({ setUsername, setToken }) {
         body: JSON.stringify(values),
       });
       const data = await res.json();
-      console.log("Response for login:", data);
-      console.log(data);
+      // console.log("Response for login:", data);
+      // console.log(data);
 
       if (data.msg === "No such user found.") {
         alert("No such user found. Please create an account.");
@@ -88,12 +88,12 @@ function LoginPage({ setUsername, setToken }) {
                 value={formik.values.password}
                 className="input input-bordered"
               />
+              {formik.touched.password && formik.errors.password ? (
+                <div className="text-sm text-red-500 italic">
+                  {formik.errors.password}
+                </div>
+              ) : null}
             </div>
-            {formik.touched.password && formik.errors.password ? (
-              <div className="text-sm text-red-500 italic">
-                {formik.errors.password}
-              </div>
-            ) : null}
           </div>
           <button
             type="submit"

@@ -45,7 +45,6 @@ const calculateCatCostPerDay = (expenseData, category, numOfDays) => {
       (entry) => entry.category.category === category
     );
   });
-  console.log("fullData:", fullData);
 
   let monthData = {};
 
@@ -107,12 +106,11 @@ function ExpensesMonth({ token }) {
   //* FETCHING the data from server
   const SERVER = import.meta.env.VITE_SERVER;
   const DBfilter = format(month, "yyyy-MM-dd");
-  console.log("DBfilter:", DBfilter);
-  console.log("token:", token);
+
   const [data, setData] = useState([]);
   useEffect(() => {
     const analysisURL = `${SERVER}analysis/month/${DBfilter}`;
-    console.log("AnalysisURL:", analysisURL);
+
     fetch(analysisURL, {
       headers: {
         "Content-Type": "application/json",
@@ -122,7 +120,6 @@ function ExpensesMonth({ token }) {
       .then((response) => response.json())
       .then((data) => setData(data));
   }, [month]);
-  console.log("Data retrieved from server:", data);
 
   //* Plotting out the x-axis values:
   let daysInMth = {};
