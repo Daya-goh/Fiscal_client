@@ -39,7 +39,10 @@ function App() {
             />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/personal" element={<Layout />}>
-              <Route index element={<Overview token={token} />} />
+              <Route
+                index
+                element={<Overview token={token} userName={userName} />}
+              />
 
               <Route
                 path="/personal/expenselog"
