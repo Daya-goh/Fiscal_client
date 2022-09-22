@@ -1,5 +1,6 @@
 import React, { createContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState } from "react";
 import "./App.css";
 import Layout from "./Layout";
 import ExpenseForm from "./Pages/ExpenseForm";
@@ -7,10 +8,7 @@ import LoginPage from "./Pages/LoginPage";
 import SignUpPage from "./Pages/SignUpPage";
 import TransactionPage from "./Pages/TransactionPage";
 import Overview from "./Pages/Overview";
-import BudgetPage from "./Pages/BudgetPage";
 import SettingsPage from "./Pages/SettingsPage";
-import { useEffect, useState } from "react";
-
 import UpdateExpense from "./Components/UpdateExpense";
 import AnalysisPage from "./Pages/AnalysisPage";
 import ExpensesMonth from "./Components/analysis/expenses/ExpensesMonth";
@@ -40,7 +38,10 @@ function App() {
             />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/personal" element={<Layout />}>
-              <Route index element={<Overview token={token} />} />
+              <Route
+                index
+                element={<Overview token={token} userName={userName} />}
+              />
 
               <Route
                 path="/personal/expenselog"
@@ -61,8 +62,6 @@ function App() {
                   />
                 }
               />
-
-              {/* <Route path="/personal/budget" element={<BudgetPage />} /> */}
               <Route
                 path="/personal/budget"
                 element={
@@ -79,7 +78,10 @@ function App() {
                   />
                 }
               />
-              <Route path="/personal/settings" element={<SettingsPage />} />
+              <Route
+                path="/personal/settings"
+                element={<SettingsPage token={token} />}
+              />
               <Route path="/personal/analysis" element={<AnalysisPage />}>
                 <Route index element={<ExpensesMonth token={token} />} />
                 <Route
