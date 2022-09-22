@@ -7,9 +7,9 @@ import LoginPage from "./Pages/LoginPage";
 import SignUpPage from "./Pages/SignUpPage";
 import TransactionPage from "./Pages/TransactionPage";
 import Overview from "./Pages/Overview";
-import BudgetPage from "./Pages/BudgetPage";
-import SettingsPage from "./Pages/SettingsPage";
-import { useEffect, useState } from "react";
+// import BudgetPage from "../Others/BudgetPage";
+import SettingsPage from "../Others/SettingsPage";
+import { useState } from "react";
 
 import UpdateExpense from "./Components/UpdateExpense";
 import AnalysisPage from "./Pages/AnalysisPage";
@@ -40,7 +40,7 @@ function App() {
               }
             />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/personal" element={<Layout />}>
+            <Route path="/personal" element={<Layout setToken={setToken} />}>
               <Route index element={<Overview token={token} />} />
 
               <Route
