@@ -82,10 +82,10 @@ function App() {
                   />
                 }
               />
-              <Route
+              {/* <Route
                 path="/personal/settings"
                 element={<SettingsPage token={token} />}
-              />
+              /> */}
               <Route path="/personal/analysis" element={<AnalysisPage />}>
                 <Route index element={<ExpensesMonth token={token} />} />
                 <Route
