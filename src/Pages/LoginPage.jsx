@@ -104,7 +104,7 @@ function LoginPage({ setUsername, setToken }) {
                   Login
                 </button>
                 <Link to="/signup" className="text-xs hover:text-cyan-700">
-                  sign up
+                  Create a new account
                 </Link>
               </form>
             </div>

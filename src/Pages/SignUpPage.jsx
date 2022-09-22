@@ -114,7 +114,7 @@ function SignUpPage() {
                   Join
                 </button>
                 <Link to="/login" className="text-xs hover:text-cyan-700">
-                  sign in
+                  Back to Login
                 </Link>
               </form>
             </div>
