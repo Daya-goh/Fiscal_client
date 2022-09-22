@@ -22,7 +22,7 @@ function RebudgetPage({ setNewBudget, token }) {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data[data.length - 2]),
-    }).then((response) => response.JSON());
+    }).then((response) => response.json());
     // .then((dataFinal) => {
     //   console.log(dataFinal);
     //   setBudgetData(dataFinal);
