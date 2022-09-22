@@ -6,7 +6,6 @@ import * as Yup from "yup";
 const SERVER = import.meta.env.VITE_SERVER;
 
 const UpdateExpense = ({ targetExpense, token }) => {
-  console.log(targetExpense);
   const [category, setCategory] = useState([]);
   const navigate = useNavigate();
   /* ------------------- fetch data for category ------------------ */
@@ -47,9 +46,6 @@ const UpdateExpense = ({ targetExpense, token }) => {
       name: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      console.log("submit");
-      console.log(JSON.stringify(values));
-      alert(JSON.stringify(values, null, 2));
       const urlExpense = `${SERVER}expense/${targetExpense._id}`;
       fetch(urlExpense, {
         method: "PUT",
@@ -58,16 +54,14 @@ const UpdateExpense = ({ targetExpense, token }) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(values),
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+      }).then((response) => response.json());
+
       //!on submit navigate to overview page
       navigate("/personal/transactions");
     },
   });
 
   const handleDelete = (event) => {
-    console.log(event.target.id);
     const urlDelete = `${SERVER}expense/delete/${event.target.id}`;
     fetch(urlDelete, {
       method: "DELETE",
@@ -75,11 +69,7 @@ const UpdateExpense = ({ targetExpense, token }) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
+    }).then((response) => response.json());
     navigate("/personal/transactions");
   };
 
@@ -208,7 +198,10 @@ const UpdateExpense = ({ targetExpense, token }) => {
                       className="input input-bordered w-60 max-w-xs text-center"
                     />
                   </div>
-                  <button className="btn bg-rose-500 border-rose-500 hover:bg-rose-300 hover:border-rose-300 w-20">
+                  <button
+                    type="submit"
+                    className="btn bg-rose-500 border-rose-500 hover:bg-rose-300 hover:border-rose-300 w-20"
+                  >
                     Update
                   </button>
                 </form>
