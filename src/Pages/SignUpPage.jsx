@@ -66,7 +66,7 @@ function SignUpPage() {
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.username}
+              value={formik.values.name}
               className="input input-bordered"
             />
           </div>
