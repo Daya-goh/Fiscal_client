@@ -15,7 +15,6 @@ import ExpensesMonth from "./Components/analysis/expenses/ExpensesMonth";
 import ExpensesYear from "./Components/analysis/expenses/ExpensesYear";
 import BalanceMonth from "./Components/analysis/balance/BalanceMonth";
 import BalanceYear from "./Components/analysis/balance/BalanceYear";
-import SavingsYear from "./Components/analysis/savings/SavingsYear";
 import RebudgetPage from "./Pages/RebudgetPage";
 import BudgetHistoryPage from "./Pages/BudgetHistoryPage";
 export const PersonContext = createContext();
@@ -84,26 +83,22 @@ function App() {
                 element={<SettingsPage token={token} />}
               />
               <Route path="/personal/analysis" element={<AnalysisPage />}>
-                <Route index element={<ExpensesMonth />} />
+                <Route index element={<ExpensesMonth token={token} />} />
                 <Route
                   path="/personal/analysis/expenses/month"
-                  element={<ExpensesMonth />}
+                  element={<ExpensesMonth token={token} />}
                 />
                 <Route
                   path="/personal/analysis/expenses/year"
-                  element={<ExpensesYear />}
-                />
-                <Route
-                  path="/personal/analysis/savings/year"
-                  element={<SavingsYear />}
+                  element={<ExpensesYear token={token} />}
                 />
                 <Route
                   path="/personal/analysis/balance/month"
-                  element={<BalanceMonth />}
+                  element={<BalanceMonth token={token} />}
                 />
                 <Route
                   path="/personal/analysis/balance/year"
-                  element={<BalanceYear />}
+                  element={<BalanceYear token={token} />}
                 />
               </Route>
             </Route>
