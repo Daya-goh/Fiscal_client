@@ -25,7 +25,6 @@ const TransactionPage = ({ setTargetExpense, token }) => {
     })
       .then((response) => response.json())
       .then((budgetData) => {
-        console.log(budgetData[0].allowance);
         setBudget(budgetData[0].allowance);
       });
 
@@ -44,8 +43,6 @@ const TransactionPage = ({ setTargetExpense, token }) => {
         setTransaction(x);
       });
   }, [date, userID, budget]);
-  // console.log(budget);
-  console.log(budget);
 
   //* function to handle logic
   const renderArray = (data, date) => {
@@ -70,7 +67,7 @@ const TransactionPage = ({ setTargetExpense, token }) => {
     data.forEach((log) => {
       // -1 due to index positioning of array
 
-      array[getDate(Date.parse(log.date)) -1 ]?.logArray.push(log);
+      array[getDate(Date.parse(log.date)) - 1]?.logArray.push(log);
     });
 
     //Number(log.date.split("T")[0].split("-")[2]

@@ -27,8 +27,8 @@ function LoginPage({ setUsername, setToken }) {
         body: JSON.stringify(values),
       });
       const data = await res.json();
-      console.log("Response for login:", data);
-      console.log(data);
+      // console.log("Response for login:", data);
+      // console.log(data);
 
       if (data.msg === "No such user found.") {
         alert("No such user found. Please create an account.");

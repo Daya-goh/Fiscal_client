@@ -14,7 +14,7 @@ function RebudgetPage({ setNewBudget, token }) {
 
   const setOldBudgetToInactive = (data) => {
     data[data.length - 2].active = false;
-    console.log(data[data.length - 2]);
+    // console.log(data[data.length - 2]);
     fetch(`${SERVER}rebudget/${data[data.length - 2]._id}`, {
       method: "PUT",
       headers: {
@@ -22,13 +22,12 @@ function RebudgetPage({ setNewBudget, token }) {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data[data.length - 2]),
-    })
-      .then((response) => response.JSON())
-      .then((dataFinal) => {
-        console.log(dataFinal);
-        //   setBudgetData(dataFinal);
-        // setNewBudget(false);
-      });
+    }).then((response) => response.json());
+    // .then((dataFinal) => {
+    //   console.log(dataFinal);
+    //   setBudgetData(dataFinal);
+    // setNewBudget(false);
+    // });
   };
 
   //* Creation of form using Formik
@@ -50,18 +49,6 @@ function RebudgetPage({ setNewBudget, token }) {
       // active: Yup.boolean().required("Required"),
     }),
     onSubmit: async (values) => {
-      alert(
-        JSON.stringify(
-          {
-            user_id: userID,
-            ...values,
-            allowance: values.income - values.fixedExpenditure - values.savings,
-            active: true,
-          },
-          null,
-          2
-        )
-      );
       fetch(budgetHistoryURL, {
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +76,7 @@ function RebudgetPage({ setNewBudget, token }) {
         }),
       });
       const data = await res.json();
-      console.log("New Budget created:", data);
+
       navigate("/personal/budget/history");
       setNewBudget(true);
     },
