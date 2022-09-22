@@ -4,7 +4,7 @@ import { format, getDaysInMonth, getMonth } from "date-fns";
 const SERVER = import.meta.env.VITE_SERVER;
 
 function Overview({ userName, token }) {
-  const budgetOverviewURL = `${SERVER}rebudget`;
+  const budgetOverviewURL = `${SERVER}rebudget/active`;
   const expenseOverviewURL = `${SERVER}transactions/today/`;
   const userDataURL = `${SERVER}user/:id`;
   const [allowance, setAllowance] = useState();
