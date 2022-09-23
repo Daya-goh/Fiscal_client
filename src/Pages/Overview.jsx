@@ -122,7 +122,7 @@ function Overview({ userName, token }) {
               <div className="flex flex-col items-center">
                 <div className="flex flex-row gap-8 items-center">
                   <div
-                    className={`radial-progress text-primary-content border-4 ${
+                    className={`radial-progress text-primary-content border-4 items-center ${
                       allowanceForTheDay > 0 ? `bg-teal-600` : `bg-red-600`
                     }`}
                     style={{
@@ -131,8 +131,7 @@ function Overview({ userName, token }) {
                       "--thickness": "1rem",
                     }}
                   >
-                    {" "}
-                    ${allowanceForTheDay}
+                    <p>Left</p>${allowanceForTheDay}
                   </div>
 
                   <div className=" flex flex-col">

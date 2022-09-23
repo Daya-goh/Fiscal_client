@@ -5,7 +5,7 @@ function NavBar({ setToken }) {
   const handleLogout = () => {
     console.log("logout");
     setToken(0);
-    navigate("/login");
+    navigate("/");
   };
 
   return (
