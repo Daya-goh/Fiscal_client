@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import * as Yup from "yup";
 
 const url = "http://localhost:4856/login";
+const SERVER = import.meta.env.VITE_SERVER;
 
 function LoginPage({ setUsername, setToken }) {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function LoginPage({ setUsername, setToken }) {
     onSubmit: async (values) => {
       // alert(JSON.stringify(values, null, 2));
 
-      const res = await fetch(url, {
+      const res = await fetch(`${SERVER}login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
