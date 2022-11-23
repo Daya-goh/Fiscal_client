@@ -41,3 +41,7 @@ An expense tracker is to help users track and manage their expenses over the mon
 ## Key Learning and AFI
 Managing a full project requires a lot of detailed planning and communication between team members. If more time we given, we hope to do a more detailed planning of the application and communicate more between the members. 
 We would want to look into different ways of displaying the transactions page and also adding more functions like giving users the users options to choose between daily allowance and monthly allowance view. 
+
+### To test out the app:
+username: bravo123
+password: Bravo123!
