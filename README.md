@@ -23,11 +23,10 @@ We wireframed the main pages of our application - login, landing, expenses and l
 
 ## Crux of the project
 The crux of the project is the ease of use of the application but also have the most important functionalities. We do not want to overcomplicate the design hence we kept it simple and we focused on the functionality of the application.
-<img width="709" alt="overview_wireframe" src="https://user-images.gi<img width="643" alt="landing_code" src="https://user-images.githubusercontent.com/108121984/203618740-122105fe-64a1-4622-95dc-286967df3e6f.png">
-thubusercontent.com/108121984/203618674-17f34a48-99e6-42ca-8c01-41e5f4ddb905.png">
 
 On the landing page, we wanted the users to be able to tell at a glance their current expenditure status/health. 
-![Uploading landing_code.png…]()
+<img width="709" alt="overview_wireframe" src="https://user-images.githubusercontent.com/108121984/203619768-b603c8fb-58f0-471f-b2d6-8922beb37f52.png">
+<img width="643" alt="landing_code" src="https://user-images.githubusercontent.com/108121984/203619812-56747bcf-fb60-40c9-959f-8efad696a005.png">
 
 For users to see all the past transactions, a container has to be set up for each day. As the months of the year are different, it is important to generate the correct number of containers for each month with daily budget and expenses logged components in them accurately. 
 <img width="538" alt="transaction_page" src="https://user-images.githubusercontent.com/108121984/203618761-3d7d87ed-f5b9-4f13-970d-45bc0e4cdaba.png">
